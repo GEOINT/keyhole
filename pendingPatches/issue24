@@ -1,0 +1,7 @@
+
+
+When using the reverse proxy one is not able to retrieve the client ip. To solve this problem a header is added to the request
+called RemoteAddr. In the called application one can get the ip by getHeader("RemoteAddr").
+
+ProxyFilter.executeRequest
+method.addRequestHeader("RemoteAddr", httpRequest.getRemoteAddr());

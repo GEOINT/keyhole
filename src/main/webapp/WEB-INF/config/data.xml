@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <!-- requested by scarff -->
+    <server className="net.sf.j2ep.servers.BaseServer"
+            scheme="http"
+            domainName="www.tecmint.com"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/tecmint"/>
+    </server>
+    
+    <!-- requested by ken -->
+    
+    <server className="net.sf.j2ep.servers.BaseServer" 
+            scheme="http"
+            domainName="dovecot.org"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/dovcot"/>
+    </server>
+    <server className="net.sf.j2ep.servers.BaseServer"
+            scheme="http"
+            domainName="blog.dovecot.org"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/blog.dovcot"/>
+    </server>
+    <server className="net.sf.j2ep.servers.BaseServer"
+            scheme="http"
+            domainName="wiki2.dovecot.org"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/wiki2.dovcot"/>
+    </server>
+    <server className="net.sf.j2ep.servers.BaseServer"
+            scheme="http"
+            domainName="store.dovecot.fi"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/store.dovcot"/>
+    </server>
+    
+    <!-- requested by jbell -->
+    <server className="net.sf.j2ep.servers.BaseServer"
+            scheme="http"
+            domainName="wiki.samba.org"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/samba"/>
+    </server>
+    
+
+    
+    <!-- GF admin console -->
+    <server className="net.sf.j2ep.servers.BaseServer"
+            scheme="https"
+            domainName="96.127.34.194:5959"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/gf"/>
+    </server>
+    
+    <!-- jenkins -->
+    <server className="net.sf.j2ep.servers.BaseServer"
+            scheme="https"
+            domainName="96.127.34.194:6969/jenkins"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/jenkins"/>
+    </server>
+    
+    <!-- archiva -->
+    <server className="net.sf.j2ep.servers.BaseServer"
+            scheme="https"
+            domainName="96.127.34.194:6969/archiva"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/archiva"/>
+    </server>
+    
+    <!-- scm-manager -->
+    <server className="net.sf.j2ep.servers.BaseServer"
+            scheme="https"
+            domainName="96.127.34.194:8080/svn"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/svn"/>
+    </server>
+    
+    <!-- default -->
+</config>
