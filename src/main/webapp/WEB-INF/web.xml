@@ -4,6 +4,10 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
     <display-name>j2ep</display-name>
+    <listener>
+        <description>SSL trust manager overridding</description>
+        <listener-class>com.candlelight.keyhole.servlet.ssl.TerribleTrustManagerInstaller</listener-class>
+    </listener>
     <filter>
         <filter-name>Rewriter</filter-name>
         <filter-class>net.sf.j2ep.RewriteFilter</filter-class>
