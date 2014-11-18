@@ -1,55 +1,62 @@
-///*
-// * Copyright 2005 Anders Nyman.
-// * 
-// * Licensed under the Apache License, Version 2.0 (the "License");
-// * you may not use this file except in compliance with the License.
-// * You may obtain a copy of the License at
-// * 
-// *      http://www.apache.org/licenses/LICENSE-2.0
-// * 
-// * Unless required by applicable law or agreed to in writing, software
-// * distributed under the License is distributed on an "AS IS" BASIS,
-// * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// * See the License for the specific language governing permissions and
-// * limitations under the License.
-// */
-//
-//package net.sf.j2ep.test;
-//
-//import java.io.IOException;
-//import java.net.InetAddress;
-//import java.net.UnknownHostException;
-//
-//import javax.servlet.ServletException;
-//
-//import net.sf.j2ep.ProxyFilter;
-//
-//import org.apache.cactus.FilterTestCase;
-//import org.apache.cactus.WebRequest;
-//import org.apache.cactus.WebResponse;
-//
-///**
-// * Tests the GetHandler. Is the main testclass for this program since it will
-// * test some simple default behavior.
-// * 
-// * @author Anders Nyman
-// */
-//public class GetTest extends FilterTestCase {
-//
-//    private ProxyFilter proxyFilter;
-//
-//    @Override
-//    public void setUp() {        
-//        proxyFilter = new ProxyFilter();
-//
-//        config.setInitParameter("dataUrl", "/WEB-INF/classes/net/sf/j2ep/test/testData.xml");
-//        try {
-//            proxyFilter.init(config);
-//        } catch (ServletException e) {
-//            fail("Problem with init, error given was " + e.getMessage());
-//        }
+/* 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.geoint.keyhole;
+
+import java.io.File;
+import junit.framework.Assert;
+import net.sf.j2ep.ProxyFilter;
+import net.sf.j2ep.RewriteFilter;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OverProtocol;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/*
+ * STILL IN DEVELOPMENT, ONLY THING I NEED TO FINISH IS GETTING ARQUILLIAN 
+ * DEFAULT SERVLET TEST TO "PASS THROUGH" THE PROXY, A NEW RULE I THINK 
+ * I WILL NEED TO ADD =/
+*/
+/**
+ * Tests HTTP GET requests using Glassfish Embedded
+ */
+//@RunWith(Arquillian.class)
+public class HttpGetTest {
+
+    private static final String FILTER_PROP_TEST_CONFIG = "dataUrl";
+    private static final String FILTER_PROP_TEST_CONFIG_FILE = "/WEB-INF/classes/net/sf/j2ep/test/testData.xml";
+
+//    @Deployment
+//    @OverProtocol("Servlet 3.0")
+//    public static Archive<?> init() {
+//        return ShrinkWrap.create(WebArchive.class, "keyhole.war")
+//                .addClass(ProxyFilter.class)
+//                .addClass(RewriteFilter.class)
+//                .addAsWebInfResource(new File("src/test/resources/WEB-INF/web.xml"))
+//                .addAsWebResource(new File("src/test/resources/WEB-INF/testData.xml"))
+//                ;
 //    }
 //    
+//
+//    @Test
+//    public void testNothing() throws Exception {
+//        Thread.sleep(10000);
+//    }
+
 //    public void beginNormalRequest(WebRequest theRequest) {
 //        theRequest.setURL("localhost:8080", "/test", "/GET/main.jsp", null, null);
 //    }
@@ -156,5 +163,4 @@
 //            fail("Couldn't get the hostname needed for header Via");
 //        }
 //    }
-//    
-//}
+}

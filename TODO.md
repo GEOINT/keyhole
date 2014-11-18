@@ -15,3 +15,5 @@
 * [apply path from issue#23 Rewrite Cookie problem ] (http://sourceforge.net/p/j2ep/bugs/23/)
 * [evaluate issue/path #20 on  2009-08-14 08:42 ] (http://sourceforge.net/p/j2ep/bugs/20/)
 * [evaluate issue #17] (http://sourceforge.net/p/j2ep/bugs/17/)
+* setup JAAS authentication 
+* create admin console to add/remove sites to proxy, replacing the data.xml file with an external data store

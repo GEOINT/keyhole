@@ -22,6 +22,7 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +31,7 @@ import javax.servlet.WriteListener;
 
 import net.sf.j2ep.model.Server;
 
-import org.apache.commons.logging.Log;
+import java.util.logging.Logger;
 import org.apache.commons.logging.LogFactory;
 
 /**
@@ -38,7 +39,7 @@ import org.apache.commons.logging.LogFactory;
  * being sent is cached by the stream and can rewrite all the links.
  *
  * @author Anders Nyman
- * 
+ *
  */
 public final class UrlRewritingOutputStream extends ServletOutputStream {
 
@@ -78,10 +79,7 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
     private static final Pattern linkPattern
             = Pattern.compile("\\b(href=|src=|action=|url\\()([\"\'])(([^/]+://)([^/<>]+))?([^\"\'>]*)[\"\']", Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
 
-    /**
-     * Logging element supplied by commons-logging.
-     */
-    private static Log log;
+    private static final Logger logger = Logger.getLogger("org.geoint.keyhole");
 
     /**
      * Basic constructor.
@@ -100,7 +98,6 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
         this.ownHostName = ownHostName;
         this.contextPath = contextPath;
         this.serverChain = serverChain;
-        log = LogFactory.getLog(UrlRewritingOutputStream.class);
 
         stream = new ByteArrayOutputStream();
     }
@@ -172,7 +169,6 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
          */
         StringBuffer page = new StringBuffer();
 
-        
         Charset charset = Charset.forName(encoding);
         CharsetEncoder encoder = charset.newEncoder();
         CharsetDecoder decoder = charset.newDecoder();
@@ -194,9 +190,7 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
             }
 
             if (rewritten != null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Found link " + link + " >> " + rewritten);
-                }
+                logger.finest("Found link " + link + " >> " + rewritten);
                 matcher.appendReplacement(page, rewritten);
             }
         }
@@ -216,7 +210,7 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
             try {
                 writeListener.onWritePossible();
             } catch (IOException ex) {
-                log.error("Unable to notify write listener that we're ready", ex);
+                logger.log(Level.WARNING, "Unable to notify write listener that we're ready", ex);
             }
         }
     }

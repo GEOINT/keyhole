@@ -1,9 +1,7 @@
-package com.candlelight.keyhole.servlet.ssl;
+package org.geoint.keyhole.ssl;
 
-import com.candlelight.keyhole.ssl.TerribleTrustManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;

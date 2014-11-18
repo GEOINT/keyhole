@@ -18,6 +18,7 @@ package net.sf.j2ep;
 import java.io.File;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.logging.Level;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -34,8 +35,7 @@ import net.sf.j2ep.model.Server;
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
 
 /**
  * A reverse proxy using a set of Rules to identify which resource to proxy.
@@ -61,7 +61,7 @@ public class ProxyFilter implements Filter {
     /**
      * Logging element supplied by commons-logging.
      */
-    private static Log log;
+    private static final Logger logger = Logger.getLogger("org.geoint.keyhole");
 
     /**
      * The httpclient used to make all connections with, supplied by
@@ -73,6 +73,8 @@ public class ProxyFilter implements Filter {
      * Implementation of a reverse-proxy. All request go through here. This is
      * the main class where are handling starts.
      *
+     * @param request
+     * @param response
      * @param filterChain
      * @throws java.io.IOException
      * @throws javax.servlet.ServletException
@@ -105,7 +107,7 @@ public class ProxyFilter implements Filter {
 
             String url = sb.toString();
 
-            log.info("Connecting to " + url);
+            logger.log(Level.INFO, "Connecting to {0}", url);
 
             ResponseHandler responseHandler = null;
 
@@ -116,18 +118,18 @@ public class ProxyFilter implements Filter {
 
                 responseHandler.process(httpResponse);
             } catch (HttpException e) {
-                log.error("Problem while connecting to server", e);
+                logger.log(Level.WARNING, "Problem while connecting to server", e);
                 httpResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 server.setConnectionExceptionRecieved(e);
             } catch (UnknownHostException e) {
-                log.error("Could not connection to the host specified", e);
+                logger.log(Level.WARNING, "Could not connection to the host specified", e);
                 httpResponse.setStatus(HttpServletResponse.SC_GATEWAY_TIMEOUT);
                 server.setConnectionExceptionRecieved(e);
             } catch (IOException e) {
-                log.error("Problem probably with the input being send, either with a Header or the Stream", e);
+                logger.log(Level.WARNING, "Problem probably with the input being send, either with a Header or the Stream", e);
                 httpResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             } catch (MethodNotAllowedException e) {
-                log.error("Incoming method could not be handled", e);
+                logger.log(Level.WARNING, "Incoming method could not be handled", e);
                 httpResponse.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
                 httpResponse.setHeader("Allow", e.getAllowedMethods());
             } finally {
@@ -207,8 +209,7 @@ public class ProxyFilter implements Filter {
      */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        System.out.println(filterConfig.getFilterName());
-        log = LogFactory.getLog(ProxyFilter.class);
+        logger.info("init proxy filter");
         AllowedMethodHandler.setAllowedMethods("OPTIONS,GET,HEAD,POST,PUT,DELETE,TRACE");
 
         httpClient = new HttpClient(new MultiThreadedHttpConnectionManager());
@@ -236,7 +237,6 @@ public class ProxyFilter implements Filter {
      */
     @Override
     public void destroy() {
-        log = null;
         httpClient = null;
         serverChain = null;
     }

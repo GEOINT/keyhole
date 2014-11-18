@@ -19,11 +19,12 @@ package net.sf.j2ep;
 import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.logging.Level;
 
 import net.sf.j2ep.model.ServerContainer;
 
 import org.apache.commons.digester3.Digester;
-import org.apache.commons.logging.Log;
+import java.util.logging.Logger;
 import org.apache.commons.logging.LogFactory;
 
 /**
@@ -45,7 +46,7 @@ public class ConfigParser {
     /**
      * A logging instance supplied by commons-logging.
      */
-    private static Log log;
+    private static final Logger logger = Logger.getLogger("org.geoint.keyhole");
 
     /**
      * Standard constructor only specifying the input file. The constructor will
@@ -56,10 +57,9 @@ public class ConfigParser {
      *            The config file containing the XML data structure.
      */
     public ConfigParser(File data) {
-        log = LogFactory.getLog(ConfigParser.class);
         try {
             LinkedList serverContainer = createServerList(data);
-            if (log.isDebugEnabled()) {
+            if (logger.isLoggable(Level.FINEST)) {
                 debugServers(serverContainer); 
             }
             serverChain = new ServerChain(serverContainer);
@@ -149,7 +149,7 @@ public class ConfigParser {
         
         while (itr.hasNext()) {
             ServerContainer container = (ServerContainer) itr.next();
-            log.debug(container + " mapped to --> " + container.getRule());
+            logger.log(Level.FINEST, "{0} mapped to --> {1}", new Object[]{container, container.getRule()});
         }
     }
 }

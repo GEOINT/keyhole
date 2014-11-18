@@ -53,7 +53,7 @@ public abstract class BaseRule implements Rule {
      */
     @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         buffer.append("[");
         buffer.append(getClass().getName());

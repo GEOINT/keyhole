@@ -50,7 +50,7 @@ public class AllowedMethodHandler {
      * @return The allowed headers for this request
      */
     public static String processAllowHeader(String allowSent) {
-        StringBuffer allowToSend = new StringBuffer("");
+        StringBuilder allowToSend = new StringBuilder("");
         StringTokenizer tokenizer = new StringTokenizer(allowSent, ",");
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken().trim().toUpperCase();

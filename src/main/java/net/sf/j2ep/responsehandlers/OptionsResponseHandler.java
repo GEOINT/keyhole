@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.sf.j2ep.responsehandlers;
 
 import java.io.IOException;
+import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,34 +24,30 @@ import net.sf.j2ep.model.AllowedMethodHandler;
 
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.methods.OptionsMethod;
-import org.apache.commons.logging.Log;
+import java.util.logging.Logger;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Handler for the OPTIONS method.
- * Will process the Allow header so that
- * no methods that the backing server can handle
- * but we can't are being sent to the client.
+ * Handler for the OPTIONS method. Will process the Allow header so that no
+ * methods that the backing server can handle but we can't are being sent to the
+ * client.
  *
  * @author Anders Nyman
  */
 public class OptionsResponseHandler extends ResponseHandlerBase {
 
-    /** 
-     * The logger.
-     */
-    private static final Log log = LogFactory.getLog(OptionsResponseHandler.class);
-    
-    /** 
-     * Set a construction to indicate if the request is directed to the
-     * proxy directly by using Max-Forwards: 0 or using URI *.
+    private static final Logger logger = Logger.getLogger("org.geoint.keyhole");
+
+    /**
+     * Set a construction to indicate if the request is directed to the proxy
+     * directly by using Max-Forwards: 0 or using URI *.
      */
     private final boolean useOwnAllow;
 
     /**
-     * Constructor checking if we should handle the Allow header
-     * ourself or respond with the backing servers header.
-     * 
+     * Constructor checking if we should handle the Allow header ourself or
+     * respond with the backing servers header.
+     *
      * @param method The method for this response
      */
     public OptionsResponseHandler(OptionsMethod method) {
@@ -60,14 +56,13 @@ public class OptionsResponseHandler extends ResponseHandlerBase {
     }
 
     /**
-     * Will check if we are to handle this request, if so 
-     * the http methods allowed by this proxy is returned in the 
-     * Allow header.
-     * If it is a request meant for the backing server its
-     * allowed method will be returned.
-     * 
+     * Will check if we are to handle this request, if so the http methods
+     * allowed by this proxy is returned in the Allow header. If it is a request
+     * meant for the backing server its allowed method will be returned.
+     *
      * @param response
-     * @see net.sf.j2ep.model.ResponseHandler#process(javax.servlet.http.HttpServletResponse)
+     * @see
+     * net.sf.j2ep.model.ResponseHandler#process(javax.servlet.http.HttpServletResponse)
      */
     @Override
     public void process(HttpServletResponse response) {
@@ -88,7 +83,8 @@ public class OptionsResponseHandler extends ResponseHandlerBase {
                 try {
                     sendStreamToClient(response);
                 } catch (IOException e) {
-                    log.error("Problem with writing response stream, solving by setting Content-Length=0", e);
+                    logger.log(Level.WARNING, "Problem with writing response "
+                            + "stream, solving by setting Content-Length=0", e);
                     response.setHeader("Content-Length", "0");
                 }
             }
@@ -96,10 +92,10 @@ public class OptionsResponseHandler extends ResponseHandlerBase {
     }
 
     /**
-     * Returns 200 if the request is targeted to the proxy
-     * otherwise the normal status code is returned.
-     * 
-     * @return 
+     * Returns 200 if the request is targeted to the proxy otherwise the normal
+     * status code is returned.
+     *
+     * @return
      * @see net.sf.j2ep.model.ResponseHandler#getStatusCode()
      */
     @Override

@@ -1,4 +1,4 @@
-package com.candlelight.keyhole.ssl;
+package org.geoint.keyhole.ssl;
 
 import java.security.cert.X509Certificate;
 import javax.net.ssl.TrustManager;

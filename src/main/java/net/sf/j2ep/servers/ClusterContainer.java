@@ -17,12 +17,13 @@ package net.sf.j2ep.servers;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Level;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
+import java.util.logging.Logger;
 import org.apache.commons.logging.LogFactory;
 
 import net.sf.j2ep.model.Rule;
@@ -41,7 +42,7 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
     /**
      * Logging element supplied by commons-logging.
      */
-    private static Log log;
+    private static final Logger logger = Logger.getLogger("org.geoint.keyhole");
 
     /**
      * The servers in our cluster,
@@ -60,7 +61,6 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
         servers = new HashMap();
         statusChecker = new ServerStatusChecker(this, 5 * 60 * 1000);
         statusChecker.start();
-        log = LogFactory.getLog(ClusterContainer.class);
     }
 
     /**
@@ -99,13 +99,16 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
         if (server == null || !server.online()) {
             server = getNextServer();
         } else {
-            log.debug("Server found in session");
+            logger.finest("Server found in session");
         }
 
         if (server.online()) {
-            log.debug("Using id " + server.getServerId() + " for this request");
+            logger.log(Level.FINEST, "Using id {0} for this request",
+                    server.getServerId());
         } else {
-            log.error("All the servers in this cluster are offline. Using id " + server.getServerId() + ", will probably not work");
+            logger.log(Level.WARNING, "All the servers in this cluster are "
+                    + "offline. Using id {0}, will probably not work",
+                    server.getServerId());
         }
         return server;
     }
@@ -202,7 +205,8 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
      * @param domainName The domain name for the new server
      * @param directory The director for the new server.
      */
-    public synchronized void addServer(String scheme, String domainName, String directory) {
+    public synchronized void addServer(String scheme, String domainName,
+            String directory) {
         if (domainName == null) {
             throw new IllegalArgumentException("The domainName cannot be null");
         }
@@ -213,7 +217,8 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
         ClusteredServer server = createNewServer(scheme, domainName, directory);
         servers.put(server.getServerId(), server);
         statusChecker.addServer(server);
-        log.debug("Added server " + domainName + directory + " to the cluster on id " + server.getServerId());
+        logger.log(Level.FINEST, "Added server {0}{1} to the cluster on id {2}",
+                new Object[]{domainName, directory, server.getServerId()});
     }
 
     /**

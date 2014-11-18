@@ -17,6 +17,7 @@ package net.sf.j2ep;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 
 import net.sf.j2ep.model.Server;
 
-import org.apache.commons.logging.Log;
+import java.util.logging.Logger;
 import org.apache.commons.logging.LogFactory;
 
 /**
@@ -88,7 +89,7 @@ public final class UrlRewritingResponseWrapper extends HttpServletResponseWrappe
     /**
      * Logging element supplied by commons-logging.
      */
-    private static Log log;
+    private static final Logger logger = Logger.getLogger("org.geoint.keyhole");
 
     /**
      * Basic constructor.
@@ -107,7 +108,6 @@ public final class UrlRewritingResponseWrapper extends HttpServletResponseWrappe
         this.contextPath = contextPath;
         this.serverChain = serverChain;
 
-        log = LogFactory.getLog(UrlRewritingResponseWrapper.class);
         outStream = new UrlRewritingOutputStream(response.getOutputStream(), response.getCharacterEncoding(), ownHostName, contextPath, serverChain);
         outWriter = new PrintWriter(outStream);
         originalWriter = new PrintWriter(response.getOutputStream());
@@ -182,7 +182,8 @@ public final class UrlRewritingResponseWrapper extends HttpServletResponseWrappe
             }
         }
         matcher.appendTail(header);
-        log.debug("Location header rewritten " + value + " >> " + header.toString());
+        logger.log(Level.FINEST, "Location header rewritten {0} >> {1}",
+                new Object[]{value, header.toString()});
         return header.toString();
     }
 
@@ -206,7 +207,8 @@ public final class UrlRewritingResponseWrapper extends HttpServletResponseWrappe
 
         }
         matcher.appendTail(header);
-        log.debug("Set-Cookie header rewritten \"" + value + "\" >> " + header.toString());
+        logger.log(Level.FINEST, "Set-Cookie header rewritten \"{0}\" >> {1}",
+                new Object[]{value, header.toString()});
         return header.toString();
     }
 
@@ -214,8 +216,8 @@ public final class UrlRewritingResponseWrapper extends HttpServletResponseWrappe
      * Based on the value in the content-type header we either return the
      * default stream or our own stream that can rewrite links.
      *
-     * @return 
-     * @throws java.io.IOException 
+     * @return
+     * @throws java.io.IOException
      * @see javax.servlet.ServletResponse#getOutputStream()
      */
     @Override
@@ -232,8 +234,8 @@ public final class UrlRewritingResponseWrapper extends HttpServletResponseWrappe
      * default writer or our own writer. Our own writer will write to the stream
      * that can rewrite links.
      *
-     * @return 
-     * @throws java.io.IOException 
+     * @return
+     * @throws java.io.IOException
      * @see javax.servlet.ServletResponse#getWriter()
      */
     @Override

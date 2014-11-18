@@ -138,7 +138,7 @@ public abstract class ResponseHandlerBase implements ResponseHandler{
         }
         
         Header originalVia = method.getResponseHeader("via");
-        StringBuffer via = new StringBuffer("");
+        StringBuilder via = new StringBuilder("");
         if (originalVia != null) {
             via.append(originalVia.getValue()).append(", ");
         }
