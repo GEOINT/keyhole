@@ -32,7 +32,6 @@ import javax.servlet.WriteListener;
 import net.sf.j2ep.model.Server;
 
 import java.util.logging.Logger;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * A wrapper for the default output stream. This class will make sure all data
@@ -76,9 +75,10 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
     /**
      * Regex matching links in the HTML.
      */
-    private static final Pattern linkPattern
-            = Pattern.compile("\\b(href=|src=|action=|url\\()([\"\'])(([^/]+://)([^/<>]+))?([^\"\'>]*)[\"\']", Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
-
+   private static final Pattern linkPattern = Pattern
+       .compile("(href=|src=|action=)[\"\']([^/]+://)([^/]+)?([^\"\'>]+)[\"\']", 
+        Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
+   
     private static final Logger logger = Logger.getLogger("org.geoint.keyhole");
 
     /**
