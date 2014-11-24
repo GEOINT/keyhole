@@ -45,7 +45,8 @@ public class TimeRule extends BaseRule {
      * be checked correctly. Note the difference between 01-23 and 23-01.
      * @param request
      * @return 
-     * @see net.sf.j2ep.model.Rule#matches(javax.servlet.http.HttpServletRequest)
+     * @see net.sf.j2ep.model.Rule#matches(
+     * javax.servlet.http.HttpServletRequest)
      */
     @Override
     public boolean matches(HttpServletRequest request) {
@@ -86,5 +87,4 @@ public class TimeRule extends BaseRule {
             endTime = Integer.parseInt(time)%24;
         }
     } 
-
 }

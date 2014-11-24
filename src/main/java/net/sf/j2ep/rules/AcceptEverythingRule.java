@@ -39,6 +39,5 @@ public class AcceptEverythingRule extends BaseRule {
     @Override
     public boolean matches(HttpServletRequest request) {
         return true;
-    }
-    
+    }    
 }

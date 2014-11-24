@@ -34,7 +34,8 @@ public interface ResponseHandler {
      * it's one method specific actions to the process method.
      * 
      * @param response The response to process
-     * @throws IOException An exception is thrown when there is a problem with writing the output
+     * @throws IOException An exception is thrown when there is a problem 
+     * with writing the output
      */
     public void process(HttpServletResponse response) throws IOException;
     

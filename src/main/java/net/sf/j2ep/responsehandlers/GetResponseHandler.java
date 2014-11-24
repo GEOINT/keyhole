@@ -34,5 +34,4 @@ public class GetResponseHandler extends BasicResponseHandler {
     public GetResponseHandler(GetMethod method) {
         super(method);
     }
-
 }

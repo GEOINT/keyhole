@@ -38,8 +38,9 @@ public interface RequestHandler {
      * @param request The request we are processing
      * @param url URL to bind the method to
      * @return The method we have created
-     * @throws IOException An exception is thrown when there is a problem with the input supplied by the request
+     * @throws IOException An exception is thrown when there is a problem 
+     * with the input supplied by the request
      */
-    public HttpMethod process(HttpServletRequest request, String url) throws IOException;
-
+    public HttpMethod process(HttpServletRequest request, String url) 
+            throws IOException;
 }

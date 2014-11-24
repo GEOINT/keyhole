@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.sf.j2ep.requesthandlers;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
-
 
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
@@ -35,36 +33,32 @@ import org.apache.commons.httpclient.methods.PutMethod;
 public class EntityEnclosingRequestHandler extends RequestHandlerBase {
 
     /**
-     * Will set the input stream and the Content-Type header to match this request.
-     * Will also set the other headers send in the request.
-     * 
+     * Will set the input stream and the Content-Type header to match this
+     * request. Will also set the other headers send in the request.
+     *
      * @param request
      * @param url
-     * @return 
-     * @throws IOException An exception is throws when there is a problem getting the input stream
-     * @see net.sf.j2ep.model.RequestHandler#process(javax.servlet.http.HttpServletRequest, java.lang.String)
+     * @return
+     * @throws IOException An exception is throws when there is a problem
+     * getting the input stream
+     * @see net.sf.j2ep.model.RequestHandler#process
+     * (javax.servlet.http.HttpServletRequest, java.lang.String)
      */
     @Override
-    public HttpMethod process(HttpServletRequest request, String url) throws IOException {
-        
+    public HttpMethod process(HttpServletRequest request, String url)
+            throws IOException {
+
         EntityEnclosingMethod method = null;
-        
         if (request.getMethod().equalsIgnoreCase("POST")) {
             method = new PostMethod(url);
         } else if (request.getMethod().equalsIgnoreCase("PUT")) {
             method = new PutMethod(url);
         }
-        
         setHeaders(method, request);
-        
         InputStreamRequestEntity stream;
         stream = new InputStreamRequestEntity(request.getInputStream());
         method.setRequestEntity(stream);
         method.setRequestHeader("Content-type", request.getContentType());
-        
         return method;
-        
     }
-        
-
 }

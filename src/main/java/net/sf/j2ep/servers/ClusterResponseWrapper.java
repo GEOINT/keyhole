@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.sf.j2ep.servers;
 
 import java.util.regex.Matcher;
@@ -26,48 +25,52 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * A wrapper that will make sure sessions are rewritten so
- * that the server can be derived from the session.
+ * A wrapper that will make sure sessions are rewritten so that the server can
+ * be derived from the session.
  *
  * @author Anders Nyman
  */
 public class ClusterResponseWrapper extends HttpServletResponseWrapper {
-    
-    /** 
+
+    /**
      * The id of the server we are adding to the session.
      */
     private final String serverId;
-    
-    /** 
+
+    /**
      * Logging element supplied by commons-logging.
      */
     private static final Log log = LogFactory.getLog(ClusterResponseWrapper.class);
-    
-    /** 
-     * Regex to find sessions in cookies.
-     */
-    private static final Pattern sessionPattern = Pattern.compile("(JSESSIONID=|PHPSESSID=|ASPSESSIONID=|ASP.NET_SessionId=)([^;\\s\\.]+)", Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
 
     /**
-     * Basic constructor, will set the id that we should add to add
-     * the sessions to make sure that the session is tracked to a specific
-     * server.
-     * 
+     * Regex to find sessions in cookies.
+     */
+    private static final Pattern sessionPattern
+            = Pattern.compile("(JSESSIONID=|PHPSESSID=|"
+                    + "ASPSESSIONID=|ASP.NET_SessionId=)([^;\\s\\.]+)",
+                    Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
+
+    /**
+     * Basic constructor, will set the id that we should add to add the sessions
+     * to make sure that the session is tracked to a specific server.
+     *
      * @param response The response we wrapp
      * @param serverId The id of the server
      */
-    public ClusterResponseWrapper(HttpServletResponse response, String serverId) {
+    public ClusterResponseWrapper(HttpServletResponse response,
+            String serverId) {
         super(response);
         this.serverId = "." + serverId;
     }
-    
+
     /**
-     * Checks for the set-cookie header. This header will have to be
-     * rewritten (if it is marking a session)
-     * 
+     * Checks for the set-cookie header. This header will have to be rewritten
+     * (if it is marking a session)
+     *
      * @param name
      * @param originalValue
-     * @see javax.servlet.http.HttpServletResponse#addHeader(java.lang.String, java.lang.String)
+     * @see javax.servlet.http.HttpServletResponse#addHeader( java.lang.String,
+     * java.lang.String)
      */
     @Override
     public void addHeader(String name, String originalValue) {
@@ -79,14 +82,15 @@ public class ClusterResponseWrapper extends HttpServletResponseWrapper {
         }
         super.addHeader(name, value);
     }
-    
+
     /**
-     * Checks for the set-cookie header. This header will have to be
-     * rewritten (if it is marking a session)
-     * 
+     * Checks for the set-cookie header. This header will have to be rewritten
+     * (if it is marking a session)
+     *
      * @param name
      * @param originalValue
-     * @see javax.servlet.http.HttpServletResponse#setHeader(java.lang.String, java.lang.String)
+     * @see javax.servlet.http.HttpServletResponse#setHeader( java.lang.String,
+     * java.lang.String)
      */
     @Override
     public void setHeader(String name, String originalValue) {
@@ -98,11 +102,10 @@ public class ClusterResponseWrapper extends HttpServletResponseWrapper {
         }
         super.setHeader(name, value);
     }
-    
+
     /**
-     * Rewrites the header Set-Cookie so that path and domain 
-     * is correct.
-     * 
+     * Rewrites the header Set-Cookie so that path and domain is correct.
+     *
      * @param value The original header
      * @return The rewritten header
      */
@@ -110,7 +113,8 @@ public class ClusterResponseWrapper extends HttpServletResponseWrapper {
         Matcher matcher = sessionPattern.matcher(value);
         String rewritten = matcher.replaceAll("$1$2" + serverId);
         if (log.isDebugEnabled() && !rewritten.equals(value)) {
-            log.debug("Session found and rewritten \"" + value + "\" >> " + rewritten);
+            log.debug("Session found and rewritten \"" + value + "\" >> "
+                    + rewritten);
         }
         return rewritten;
     }

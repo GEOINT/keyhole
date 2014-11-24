@@ -69,13 +69,16 @@ public class RoundRobinCluster extends ClusterContainer {
     
     /**
      * @return 
-     * @see net.sf.j2ep.servers.ClusterContainer#createNewServer(String, String, String)
+     * @see net.sf.j2ep.servers.ClusterContainer#createNewServer(String, 
+     * String, String)
      */
     @Override
-    protected ClusteredServer createNewServer(String scheme, String domainName, String directory) {
+    protected ClusteredServer createNewServer(String scheme, String domainName, 
+            String directory) {
         String id = "server" + numberOfServers;
         numberOfServers++;
-        ClusteredServer server = new ClusteredServer(scheme, domainName, directory, id);
+        ClusteredServer server = new ClusteredServer(scheme, domainName, 
+                directory, id);
         return server;
     }
 }

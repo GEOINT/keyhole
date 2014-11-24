@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.sf.j2ep.requesthandlers;
 
 import javax.servlet.http.HttpServletRequest;
-
 
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
@@ -25,11 +23,11 @@ import org.apache.commons.httpclient.HttpMethodBase;
 import org.apache.commons.httpclient.methods.DeleteMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.HeadMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
 
 /**
- * A handler for GET, HEAD, DELETE. Since these methods basically
- * only will need the headers set they can be handled by the same 
- * handler.
+ * A handler for GET, HEAD, DELETE. Since these methods basically only will need
+ * the headers set they can be handled by the same handler.
  *
  * @author Anders Nyman
  */
@@ -37,31 +35,40 @@ public class BasicRequestHandler extends RequestHandlerBase {
 
     /**
      * Will only set the headers.
+     *
      * @param request
      * @param url
-     * @return 
-     * @throws HttpException 
-     * 
-     * @see net.sf.j2ep.model.RequestHandler#process(javax.servlet.http.HttpServletRequest, java.lang.String)
+     * @return
+     * @throws HttpException
+     *
+     * @see
+     * net.sf.j2ep.model.RequestHandler#process(javax.servlet.http.HttpServletRequest,
+     * java.lang.String)
      */
     @Override
-    public HttpMethod process(HttpServletRequest request, String url) throws HttpException {
-        
+    public HttpMethod process(HttpServletRequest request, String url) 
+            throws HttpException {
+
         HttpMethodBase method = null;
-      
+
         if (request.getMethod().equalsIgnoreCase("GET")) {
+            System.out.println("GET method called");
             method = new GetMethod(url);
         } else if (request.getMethod().equalsIgnoreCase("HEAD")) {
+            System.out.println("HEAD method called");
             method = new HeadMethod(url);
         } else if (request.getMethod().equalsIgnoreCase("DELETE")) {
+            System.out.println("DELETE method called");
             method = new DeleteMethod(url);
-        } else {
+        } else if (request.getMethod().equalsIgnoreCase("POST")) {
+            System.out.println("POST method called");
+            method = new PostMethod(url);
+        } else {            
+            System.out.println("HttpServletRequest method not identifiable: " 
+                    + request.getMethod());
             return null;
         }
-        
         setHeaders(method, request);
         return method;
     }
-      
-
 }

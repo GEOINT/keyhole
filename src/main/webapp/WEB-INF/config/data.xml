@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
+    <!-- test instance  -->
+    <!-- server className="net.sf.j2ep.servers.BaseServer"   
+            scheme="http"        
+            domainName="127.0.0.1:8080"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/proxyJenkins"/>
+        
+    </server -->     
+    
+    <!-- server className="net.sf.j2ep.servers.BaseServer"
+            scheme="https"
+            domainName="96.127.34.194:6969/jenkins"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/jenkins"/>
+    </server  -->      
+    
     <!-- requested by scarff -->
     <server className="net.sf.j2ep.servers.BaseServer"
             scheme="http"
@@ -33,7 +49,7 @@
             domainName="store.dovecot.fi"
             isRewriting="true">
         <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/store.dovcot"/>
-    </server>
+    </server -->
     
     <!-- requested by jbell -->
     <server className="net.sf.j2ep.servers.BaseServer"
@@ -78,4 +94,5 @@
     </server>
     
     <!-- default -->
+    
 </config>

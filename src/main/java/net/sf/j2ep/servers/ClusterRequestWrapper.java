@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.sf.j2ep.servers;
 
 import java.util.Enumeration;
@@ -28,61 +27,66 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * A wrapper for requests that will create it's own set
- * of headers. The headers are the same except for 
- * cookies with a JSESSIONID that has a mark for a specific
- * server. More information about this can be found in the 
+ * A wrapper for requests that will create it's own set of headers. The headers
+ * are the same except for cookies with a JSESSIONID that has a mark for a
+ * specific server. More information about this can be found in the
  * ClusterServer
- * 
+ *
  * @author Anders Nyman
  * @see ClusterContainer
  */
 public class ClusterRequestWrapper extends HttpServletRequestWrapper {
-    
-    /** 
+
+    /**
      * The cookies for this request.
      */
     private final Vector cookies;
-    
-    /** 
+
+    /**
      * Regex to find session in cookies.
      */
-    private static final Pattern sessionPattern = Pattern.compile("((JSESSIONID=|PHPSESSID=|ASPSESSIONID=|ASP.NET_SessionId=)[a-z0-9]+)(\\.[^;\\s]+)", Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
-    
-    /** 
+    private static final Pattern sessionPattern
+            = Pattern.compile("((JSESSIONID="
+                    + "|PHPSESSID=|ASPSESSIONID=|ASP.NET_SessionId=)[a-z0-9]+)"
+                    + "(\\.[^;\\s]+)",
+                    Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
+
+    /**
      * Logging element supplied by commons-logging.
      */
-    private static final Log log = LogFactory.getLog(ClusterResponseWrapper.class);
-    
+    private static final Log log
+            = LogFactory.getLog(ClusterResponseWrapper.class);
+
     /**
-     * Constructor, will check all cookies if they include
-     * JSESSIONID. If they do any extra information about
-     * which server this session was created for is removed.
-     * 
+     * Constructor, will check all cookies if they include JSESSIONID. If they
+     * do any extra information about which server this session was created for
+     * is removed.
+     *
      * @param request The request we wrap.
      */
     public ClusterRequestWrapper(HttpServletRequest request) {
         super(request);
         cookies = new Vector();
-        
+
         Enumeration reqCookies = request.getHeaders("Cookie");
         while (reqCookies.hasMoreElements()) {
             String value = (String) reqCookies.nextElement();
             Matcher matcher = sessionPattern.matcher(value);
             String replaced = matcher.replaceAll("$1");
             if (log.isDebugEnabled() && !replaced.equals(value)) {
-                log.debug("Session processed, serverId removed \"" + value + "\" >> " + replaced);
+                log.debug("Session processed, serverId removed \"" 
+                        + value + "\" >> " + replaced);
             }
             cookies.add(replaced);
         }
     }
 
     /**
-     * Will return the default request's header unless we are requesting
-     * a cookie. If it's a cookie we want we will use our own.
-     * 
+     * Will return the default request's header unless we are requesting a
+     * cookie. If it's a cookie we want we will use our own.
+     *
      * @param name
-     * @return 
+     * @return
      * @see javax.servlet.http.HttpServletRequest#getHeader(java.lang.String)
      */
     @Override
@@ -93,13 +97,13 @@ public class ClusterRequestWrapper extends HttpServletRequestWrapper {
             return super.getHeader(name);
         }
     }
-    
+
     /**
-     * Will return the default request's headers unless we are requesting
-     * a cookie. If it's a cookie we want we will use our own vector.
-     * 
+     * Will return the default request's headers unless we are requesting a
+     * cookie. If it's a cookie we want we will use our own vector.
+     *
      * @param name
-     * @return 
+     * @return
      * @see javax.servlet.http.HttpServletRequest#getHeaders(java.lang.String)
      */
     @Override
@@ -109,6 +113,5 @@ public class ClusterRequestWrapper extends HttpServletRequestWrapper {
         } else {
             return super.getHeaders(name);
         }
-    }   
-    
+    }
 }

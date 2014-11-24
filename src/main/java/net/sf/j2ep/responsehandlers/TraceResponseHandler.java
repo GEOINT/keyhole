@@ -55,7 +55,8 @@ public class TraceResponseHandler extends ResponseHandlerBase {
      * or the proxy's own data.
      * @param response
      * @throws java.io.IOException
-     * @see net.sf.j2ep.model.ResponseHandler#process(javax.servlet.http.HttpServletResponse)
+     * @see net.sf.j2ep.model.ResponseHandler#process(
+     * javax.servlet.http.HttpServletResponse)
      */
     @Override
     public void process(HttpServletResponse response) throws IOException {
@@ -98,5 +99,4 @@ public class TraceResponseHandler extends ResponseHandlerBase {
             return super.getStatusCode();
         }
     }
-
 }

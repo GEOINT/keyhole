@@ -40,7 +40,8 @@ public class OptionsResponseHandler extends ResponseHandlerBase {
     /** 
      * The logger.
      */
-    private static final Log log = LogFactory.getLog(OptionsResponseHandler.class);
+    private static final Log log = 
+            LogFactory.getLog(OptionsResponseHandler.class);
     
     /** 
      * Set a construction to indicate if the request is directed to the
@@ -67,7 +68,8 @@ public class OptionsResponseHandler extends ResponseHandlerBase {
      * allowed method will be returned.
      * 
      * @param response
-     * @see net.sf.j2ep.model.ResponseHandler#process(javax.servlet.http.HttpServletResponse)
+     * @see net.sf.j2ep.model.ResponseHandler#process(
+     * javax.servlet.http.HttpServletResponse)
      */
     @Override
     public void process(HttpServletResponse response) {
@@ -80,7 +82,8 @@ public class OptionsResponseHandler extends ResponseHandlerBase {
             setHeaders(response);
             response.setStatus(getStatusCode());
             String allow = method.getResponseHeader("allow").getValue();
-            response.setHeader("allow", AllowedMethodHandler.processAllowHeader(allow));
+            response.setHeader("allow", 
+                    AllowedMethodHandler.processAllowHeader(allow));
             Header contentLength = method.getResponseHeader("Content-Length");
             if (contentLength == null || contentLength.getValue().equals("0")) {
                 response.setHeader("Content-Length", "0");
@@ -88,7 +91,8 @@ public class OptionsResponseHandler extends ResponseHandlerBase {
                 try {
                     sendStreamToClient(response);
                 } catch (IOException e) {
-                    log.error("Problem with writing response stream, solving by setting Content-Length=0", e);
+                    log.error("Problem with writing response stream, "
+                            + "solving by setting Content-Length=0", e);
                     response.setHeader("Content-Length", "0");
                 }
             }
@@ -110,5 +114,4 @@ public class OptionsResponseHandler extends ResponseHandlerBase {
             return super.getStatusCode();
         }
     }
-
 }

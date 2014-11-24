@@ -36,7 +36,8 @@ import net.sf.j2ep.model.Server;
  *
  * @author Anders Nyman
  */
-public abstract class ClusterContainer extends ServerContainerBase implements ServerStatusListener {
+public abstract class ClusterContainer extends ServerContainerBase
+        implements ServerStatusListener {
 
     /**
      * Logging element supplied by commons-logging.
@@ -71,7 +72,8 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
      * @param directory The directory
      * @return The created server
      */
-    protected abstract ClusteredServer createNewServer(String scheme, String domainName, String directory);
+    protected abstract ClusteredServer createNewServer(String scheme, 
+            String domainName, String directory);
 
     /**
      * Returns the next server in out cluster. Is used when we can't get a
@@ -90,7 +92,8 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
      * @param request
      * @return
      * @see
-     * net.sf.j2ep.model.ServerContainer#getServer(javax.servlet.http.HttpServletRequest)
+     * net.sf.j2ep.model.ServerContainer#getServer(
+     * javax.servlet.http.HttpServletRequest)
      */
     @Override
     public Server getServer(HttpServletRequest request) {
@@ -105,7 +108,8 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
         if (server.online()) {
             log.debug("Using id " + server.getServerId() + " for this request");
         } else {
-            log.error("All the servers in this cluster are offline. Using id " + server.getServerId() + ", will probably not work");
+            log.error("All the servers in this cluster are offline. Using id " 
+                    + server.getServerId() + ", will probably not work");
         }
         return server;
     }
@@ -172,7 +176,8 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
      * ClusteredServers
      *
      * @see
-     * net.sf.j2ep.servers.ServerStatusListener#serverOffline(net.sf.j2ep.model.Server)
+     * net.sf.j2ep.servers.ServerStatusListener#serverOffline(
+     * net.sf.j2ep.model.Server)
      */
     @Override
     public void serverOffline(Server server) {
@@ -186,7 +191,8 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
      * ClusteredServers
      *
      * @see
-     * net.sf.j2ep.servers.ServerStatusListener#serverOnline(net.sf.j2ep.model.Server)
+     * net.sf.j2ep.servers.ServerStatusListener#serverOnline(
+     * net.sf.j2ep.model.Server)
      */
     @Override
     public void serverOnline(Server server) {
@@ -202,7 +208,8 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
      * @param domainName The domain name for the new server
      * @param directory The director for the new server.
      */
-    public synchronized void addServer(String scheme, String domainName, String directory) {
+    public synchronized void addServer(String scheme, String domainName, 
+            String directory) {
         if (domainName == null) {
             throw new IllegalArgumentException("The domainName cannot be null");
         }
@@ -213,7 +220,8 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
         ClusteredServer server = createNewServer(scheme, domainName, directory);
         servers.put(server.getServerId(), server);
         statusChecker.addServer(server);
-        log.debug("Added server " + domainName + directory + " to the cluster on id " + server.getServerId());
+        log.debug("Added server " + domainName + directory 
+                + " to the cluster on id " + server.getServerId());
     }
 
     /**
@@ -272,7 +280,8 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
          * server, is removed from the request.
          *
          * @see
-         * net.sf.j2ep.model.Server#preExecute(javax.servlet.http.HttpServletRequest)
+         * net.sf.j2ep.model.Server#preExecute(
+         * javax.servlet.http.HttpServletRequest)
          */
         @Override
         public HttpServletRequest preExecute(HttpServletRequest request) {
@@ -285,7 +294,8 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
          * to.
          *
          * @see
-         * net.sf.j2ep.model.Server#postExecute(javax.servlet.http.HttpServletResponse)
+         * net.sf.j2ep.model.Server#postExecute(
+         * javax.servlet.http.HttpServletResponse)
          */
         @Override
         public HttpServletResponse postExecute(HttpServletResponse response) {
@@ -297,7 +307,8 @@ public abstract class ClusterContainer extends ServerContainerBase implements Se
          * offline.
          *
          * @see
-         * net.sf.j2ep.model.Server#setConnectionExceptionRecieved(java.lang.Exception)
+         * net.sf.j2ep.model.Server#setConnectionExceptionRecieved(
+         * java.lang.Exception)
          */
         @Override
         public void setConnectionExceptionRecieved(Exception e) {

@@ -82,6 +82,9 @@ public class ProxyFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain filterChain) throws IOException, ServletException {
+        System.out.println("doFilter()");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -92,12 +95,13 @@ public class ProxyFilter implements Filter {
         }
 
         if (server == null) {
+
             filterChain.doFilter(request, response);
         } else {
             StringBuilder sb = new StringBuilder();
             sb.append((server.getScheme() != null)
                     ? server.getScheme() //use explicitly provided scheme
-                    : request.getScheme()) //inherit from request to proxy server
+                    : request.getScheme())//inherit from request to proxy server
                     .append("://")
                     .append(server.getDomainName())
                     .append(server.getPath())
@@ -105,30 +109,33 @@ public class ProxyFilter implements Filter {
 
             String url = sb.toString();
 
-            log.info("Connecting to " + url);
-
             ResponseHandler responseHandler = null;
 
             try {
                 httpRequest = server.preExecute(httpRequest);
                 responseHandler = executeRequest(httpRequest, url);
                 httpResponse = server.postExecute(httpResponse);
-
                 responseHandler.process(httpResponse);
+
             } catch (HttpException e) {
                 log.error("Problem while connecting to server", e);
-                httpResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                httpResponse.setStatus(
+                        HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 server.setConnectionExceptionRecieved(e);
             } catch (UnknownHostException e) {
                 log.error("Could not connection to the host specified", e);
                 httpResponse.setStatus(HttpServletResponse.SC_GATEWAY_TIMEOUT);
                 server.setConnectionExceptionRecieved(e);
             } catch (IOException e) {
-                log.error("Problem probably with the input being send, either with a Header or the Stream", e);
-                httpResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                log.error("Problem probably with the input being send, "
+                        + "either with a Header or the Stream", e);
+                httpResponse.setStatus(
+                        HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             } catch (MethodNotAllowedException e) {
                 log.error("Incoming method could not be handled", e);
-                httpResponse.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+
+                httpResponse.setStatus(
+                        HttpServletResponse.SC_METHOD_NOT_ALLOWED);
                 httpResponse.setHeader("Allow", e.getAllowedMethods());
             } finally {
                 if (responseHandler != null) {
@@ -147,7 +154,8 @@ public class ProxyFilter implements Filter {
      */
     private String getURI(HttpServletRequest httpRequest) {
         String contextPath = httpRequest.getContextPath();
-        String uri = httpRequest.getRequestURI().substring(contextPath.length());
+        String uri = httpRequest.getRequestURI()
+                .substring(contextPath.length());
         if (httpRequest.getQueryString() != null) {
             uri += "?" + httpRequest.getQueryString();
         }
@@ -170,6 +178,7 @@ public class ProxyFilter implements Filter {
     private ResponseHandler executeRequest(HttpServletRequest httpRequest,
             String url) throws MethodNotAllowedException, IOException,
             HttpException {
+
         RequestHandler requestHandler = RequestHandlerFactory
                 .createRequestMethod(httpRequest.getMethod());
 
@@ -183,7 +192,8 @@ public class ProxyFilter implements Filter {
          * TODO I don't like doing type casting here, see above.
          */
         if (!((HttpMethodBase) method).isAborted()) {
-            httpClient.executeMethod(method);
+            int i = httpClient.executeMethod(method);
+            System.out.println("httpClient response code: " + i);
 
             if (method.getStatusCode() == 405) {
                 Header allow = method.getResponseHeader("allow");
@@ -209,10 +219,13 @@ public class ProxyFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         System.out.println(filterConfig.getFilterName());
         log = LogFactory.getLog(ProxyFilter.class);
-        AllowedMethodHandler.setAllowedMethods("OPTIONS,GET,HEAD,POST,PUT,DELETE,TRACE");
+        AllowedMethodHandler
+                .setAllowedMethods("OPTIONS,GET,HEAD,POST,PUT,DELETE,TRACE");
 
         httpClient = new HttpClient(new MultiThreadedHttpConnectionManager());
-        httpClient.getParams().setBooleanParameter(HttpClientParams.USE_EXPECT_CONTINUE, false);
+        httpClient.getParams()
+                .setBooleanParameter(
+                        HttpClientParams.USE_EXPECT_CONTINUE, false);
         httpClient.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
 
         String data = filterConfig.getInitParameter("dataUrl");
@@ -220,7 +233,8 @@ public class ProxyFilter implements Filter {
             serverChain = null;
         } else {
             try {
-                File dataFile = new File(filterConfig.getServletContext().getRealPath(data));
+                File dataFile = new File(filterConfig.getServletContext()
+                        .getRealPath(data));
                 ConfigParser parser = new ConfigParser(dataFile);
                 serverChain = parser.getServerChain();
             } catch (Exception e) {

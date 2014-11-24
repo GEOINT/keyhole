@@ -36,7 +36,8 @@ public class ResponseHandlerFactory {
     /** 
      * These methods are handled by this factory.
      */
-    private static final String handledMethods = "OPTIONS,GET,HEAD,POST,PUT,DELETE,TRACE";
+    private static final String handledMethods = 
+            "OPTIONS,GET,HEAD,POST,PUT,DELETE,TRACE";
 
     /**
      * Checks the method being received and created a 
@@ -44,11 +45,16 @@ public class ResponseHandlerFactory {
      * 
      * @param method Method to handle
      * @return The handler for this response
-     * @throws MethodNotAllowedException If no method could be choose this exception is thrown
+     * @throws MethodNotAllowedException If no method could be choose 
+     * this exception is thrown
      */
-    public static ResponseHandler createResponseHandler(HttpMethod method) throws MethodNotAllowedException {
+    public static ResponseHandler createResponseHandler(HttpMethod method) 
+            throws MethodNotAllowedException {
         if (!AllowedMethodHandler.methodAllowed(method)) {
-            throw new MethodNotAllowedException("The method " + method.getName() + " is not in the AllowedHeaderHandler's list of allowed methods.", AllowedMethodHandler.getAllowHeader());
+            throw new MethodNotAllowedException("The method " + method.getName() 
+                    + " is not in the AllowedHeaderHandler's list "
+                    + "of allowed methods.", 
+                    AllowedMethodHandler.getAllowHeader());
         }
         
         ResponseHandler handler = null;
@@ -67,12 +73,10 @@ public class ResponseHandlerFactory {
         } else if (method.getName().equals("TRACE")) {
             handler = new TraceResponseHandler((TraceMethod) method);
         } else {
-            throw new MethodNotAllowedException("The method " + method.getName() + " was allowed by the AllowedMethodHandler, not by the factory.", handledMethods);
+            throw new MethodNotAllowedException("The method " + method.getName() 
+                    + " was allowed by the AllowedMethodHandler, "
+                    + "not by the factory.", handledMethods);
         }
-
         return handler;
     }
-
-
-
 }

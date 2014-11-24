@@ -42,7 +42,8 @@ public class HeadResponseHandler extends ResponseHandlerBase {
      * Will only set the headers and status code, no response is sent.
      * 
      * @param response
-     * @see net.sf.j2ep.model.ResponseHandler#process(javax.servlet.http.HttpServletResponse)
+     * @see net.sf.j2ep.model.ResponseHandler#process(
+     * javax.servlet.http.HttpServletResponse)
      */
     @Override
     public void process(HttpServletResponse response) {

@@ -39,13 +39,16 @@ public class MaxForwardRequestHandler extends RequestHandlerBase {
      * is meant for the server or for the proxy. This check is done
      * by looking at the Max-Forwards header.
      * 
+     * @param request
      * @param url
      * @return 
      * @throws java.io.IOException 
-     * @see net.sf.j2ep.model.RequestHandler#process(javax.servlet.http.HttpServletRequest, java.lang.String)
+     * @see net.sf.j2ep.model.RequestHandler#process(
+     * javax.servlet.http.HttpServletRequest, java.lang.String)
      */
     @Override
-    public HttpMethod process(HttpServletRequest request, String url) throws IOException {
+    public HttpMethod process(HttpServletRequest request, String url) 
+            throws IOException {
         HttpMethodBase method = null;
         
         if (request.getMethod().equalsIgnoreCase("OPTIONS")) {
@@ -92,7 +95,6 @@ public class MaxForwardRequestHandler extends RequestHandlerBase {
             while (value.hasMoreElements()) {
                 method.addRequestHeader(name, (String) value.nextElement());
             }
-
         } 
     }
 }

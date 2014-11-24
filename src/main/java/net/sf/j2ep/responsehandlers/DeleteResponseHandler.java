@@ -34,5 +34,4 @@ public class DeleteResponseHandler extends BasicResponseHandler {
     public DeleteResponseHandler(DeleteMethod method) {
         super(method);
     }
-
 }

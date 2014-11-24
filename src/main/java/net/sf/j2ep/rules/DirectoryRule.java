@@ -72,7 +72,8 @@ public class DirectoryRule extends BaseRule {
      * 
      * @param request
      * @return 
-     * @see net.sf.j2ep.model.Rule#matches(javax.servlet.http.HttpServletRequest)
+     * @see net.sf.j2ep.model.Rule#matches(
+     * javax.servlet.http.HttpServletRequest)
      */
     @Override
     public boolean matches(HttpServletRequest request) {
@@ -108,5 +109,4 @@ public class DirectoryRule extends BaseRule {
             return uri;
         }
     }
-
 }

@@ -47,7 +47,8 @@ public class BasicResponseHandler extends ResponseHandlerBase {
      * 
      * @param response
      * @throws java.io.IOException
-     * @see net.sf.j2ep.model.ResponseHandler#process(javax.servlet.http.HttpServletResponse)
+     * @see net.sf.j2ep.model.ResponseHandler#process(
+     * javax.servlet.http.HttpServletResponse)
      */
     @Override
     public void process(HttpServletResponse response) throws IOException{
@@ -55,5 +56,4 @@ public class BasicResponseHandler extends ResponseHandlerBase {
             response.setStatus(getStatusCode());
             sendStreamToClient(response);
     }
-
 }

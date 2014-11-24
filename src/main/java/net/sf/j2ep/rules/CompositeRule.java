@@ -98,8 +98,9 @@ public class CompositeRule extends BaseRule {
     
     /**
      * Will do the opposite of process, that is revert all URIs to there default
-     * value. This method will call all rules in the rule list and call revert on them.
-     * Rules are called in a reversed order in comparison with process.
+     * value. This method will call all rules in the rule list and call 
+     * revert on them.  Rules are called in a reversed order in comparison 
+     * with process.
      * 
      * @param uri
      * @return 
@@ -140,5 +141,4 @@ public class CompositeRule extends BaseRule {
         buffer.append("]");
         return buffer.toString();
     }
-
 }

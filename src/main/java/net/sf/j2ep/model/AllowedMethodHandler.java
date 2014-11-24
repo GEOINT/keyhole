@@ -68,6 +68,8 @@ public class AllowedMethodHandler {
      * @return Allowed methods
      */ 
     public static String getAllowHeader() {
+        System.out.println("AllowedMethodHandler#allowedMethods: " 
+                + allowString);
         return allowString;
     }
     
@@ -79,6 +81,9 @@ public class AllowedMethodHandler {
      * @return true if the method is allowed, false otherwise
      */
     public static boolean methodAllowed(String method) {
+        boolean ifAllowed = allowedMethods.contains(method.toUpperCase());
+        System.out.println("AllowMethodHandler.methodAllowed: " + method 
+                + " is " + ifAllowed);
         return allowedMethods.contains(method.toUpperCase());
     }
     
@@ -107,5 +112,4 @@ public class AllowedMethodHandler {
             allowedMethods.add(token);
         }
     }
-
 }

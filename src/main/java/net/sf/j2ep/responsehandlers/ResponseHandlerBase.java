@@ -55,10 +55,12 @@ public abstract class ResponseHandlerBase implements ResponseHandler{
     }
 
     /**
-     * @see net.sf.j2ep.model.ResponseHandler#process(javax.servlet.http.HttpServletResponse)
+     * @see net.sf.j2ep.model.ResponseHandler#process(
+     * javax.servlet.http.HttpServletResponse)
      */
     @Override
-    public abstract void process(HttpServletResponse response) throws IOException;
+    public abstract void process(HttpServletResponse response) 
+            throws IOException;
     
     /**
      * Will release the connection for the method.
@@ -83,9 +85,11 @@ public abstract class ResponseHandlerBase implements ResponseHandler{
      * stream.
      * 
      * @param response Response to send data to
-     * @throws IOException An IOException is thrown when we are having problems with reading the streams
+     * @throws IOException An IOException is thrown 
+     * when we are having problems with reading the streams
      */
-    protected void sendStreamToClient(ServletResponse response) throws IOException {
+    protected void sendStreamToClient(ServletResponse response) 
+            throws IOException {
         InputStream streamFromServer = method.getResponseBodyAsStream();
         OutputStream responseStream = response.getOutputStream();
         
@@ -134,7 +138,9 @@ public abstract class ResponseHandlerBase implements ResponseHandler{
         try {
             serverHostName = InetAddress.getLocalHost().getHostName();   
         } catch (UnknownHostException e) {
-            LogFactory.getLog(RequestHandlerBase.class).error("Couldn't get the hostname needed for header Via", e);
+            LogFactory.getLog(RequestHandlerBase.class)
+                    .error("Couldn't get the hostname "
+                            + "needed for header Via", e);
         }
         
         Header originalVia = method.getResponseHeader("via");
@@ -142,7 +148,8 @@ public abstract class ResponseHandlerBase implements ResponseHandler{
         if (originalVia != null) {
             via.append(originalVia.getValue()).append(", ");
         }
-        via.append(method.getStatusLine().getHttpVersion()).append(" ").append(serverHostName);
+        via.append(method.getStatusLine().getHttpVersion()).append(" ")
+                .append(serverHostName);
          
         response.setHeader("via", via.toString());
     }

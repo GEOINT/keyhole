@@ -75,8 +75,9 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
     /**
      * Regex matching links in the HTML.
      */
-    private static final Pattern linkPattern
-            = Pattern.compile("\\b(href=|src=|action=|url\\()([\"\'])(([^/]+://)([^/<>]+))?([^\"\'>]*)[\"\']", Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
+    private static final Pattern linkPattern = Pattern
+       .compile("(href=|src=|action=)[\"\']([^/]+://)([^/]+)?([^\"\'>]+)[\"\']", 
+        Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
 
     /**
      * Logging element supplied by commons-logging.
@@ -145,30 +146,40 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
      * @throws IOException Is thrown when there is a problem with the streams
      */
     public void rewrite(Server server) throws IOException {
+        System.out.println("rewrite");
         /*
          * Using regex can be quite harsh sometimes so here is how
          * the regex trying to find links works
          * 
-         * \\b(href=|src=|action=|url:\\s*|url\\()([\"\'])
-         * This part is the identification of links, matching
+         *This part is the identification of links, matching
          * something like href=", href=' and href=
+         *
+         * (href=|src=|action=)[\"\']
+         *
+         * // old version => (href=|src=|action=|url:\\s*|url\\()([\"\'])
          * 
-         * (([^/]+://)([^/<>]+))?
          * This is to identify absolute paths. A link doesn't have
          * to be absolute therefor there is a ?.
          * 
-         * ([^\"\'>]*)
+         * ([^/]+://)([^/]+)?
+         *
+         * //old version => (([^/]+://)([^/<>]+))?
+         *
          * This is the link
+         *
+         * ([^\"\'>]+)
+         *
+         * //old version => ([^\"\'>]*)
+         *
+         *
+         *Ending " or '
+         * [\"\'] //unchanged
          * 
-         * [\"\']
-         * Ending " or '
          * 
          * $1 - link type, e.g. href=
-         * $2 - ", ' or whitespace
-         * $3 - The entire http://www.server.com if present
-         * $4 - The protocol, e.g http:// or ftp:// 
-         * $5 - The host name, e.g. www.server.com
-         * $6 - The link
+         * $2 - The protocol, e.g http:// or ftp:// 
+         * $3 - The host name, e.g. www.server.com
+         * $4 - The link
          */
         StringBuffer page = new StringBuffer();
 
@@ -176,18 +187,18 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
         Charset charset = Charset.forName(encoding);
         CharsetEncoder encoder = charset.newEncoder();
         CharsetDecoder decoder = charset.newDecoder();
-        ByteBuffer buf = encoder.encode(CharBuffer.wrap(stream.toString(encoding)));
+        ByteBuffer buf = encoder.encode(
+                CharBuffer.wrap(stream.toString(encoding)));
         Matcher matcher = linkPattern.matcher(decoder.decode(buf));
-//        Matcher matcher = linkPattern.matcher(stream.toString(encoding));
         while (matcher.find()) {
 
-            String link = matcher.group(6).replaceAll("\\$", "\\\\\\$");
+            String link = matcher.group(4).replaceAll("\\$", "\\\\\\$");
             if (link.length() == 0) {
                 link = "/";
             }
 
             String rewritten = null;
-            if (matcher.group(4) != null) {
+            if (matcher.group(2) != null) {
                 rewritten = handleExternalLink(matcher, link);
             } else if (link.startsWith("/")) {
                 rewritten = handleLocalLink(server, matcher, link);
@@ -202,6 +213,7 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
         }
 
         matcher.appendTail(page);
+        System.out.println("page. tostring: " + page.toString());
         originalStream.print(page.toString());
     }
 
@@ -216,7 +228,8 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
             try {
                 writeListener.onWritePossible();
             } catch (IOException ex) {
-                log.error("Unable to notify write listener that we're ready", ex);
+                log.error(
+                        "Unable to notify write listener that we're ready", ex);
             }
         }
     }
@@ -230,16 +243,17 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
      * @return The link now rewritten
      */
     private String handleExternalLink(Matcher matcher, String link) {
-        String location = matcher.group(5) + link;
+        String location = matcher.group(3) + link;
         Server matchingServer = serverChain.getServerMapped(location);
 
         if (matchingServer != null) {
             link = link.substring(matchingServer.getPath().length());
             link = matchingServer.getRule().revert(link);
             String type = matcher.group(1);
-            String separator = matcher.group(2);
-            String protocol = matcher.group(4);
-            return type + separator + protocol + ownHostName + contextPath + link + separator;
+            char separator = '"';
+            String protocol = matcher.group(2);
+            return type + separator + protocol + ownHostName 
+                    + contextPath + link + separator;
         } else {
             return null;
         }
@@ -252,13 +266,14 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
      * @param link The original link
      * @return The rewritten link
      */
-    private String handleLocalLink(Server server, Matcher matcher, String link) {
+    private String handleLocalLink(Server server, 
+            Matcher matcher, String link) {
         String serverDir = server.getPath();
 
         if (serverDir.equals("") || link.startsWith(serverDir + "/")) {
             link = server.getRule().revert(link.substring(serverDir.length()));
             String type = matcher.group(1);
-            String separator = matcher.group(2);
+            char separator = '"';
             return type + separator + contextPath + link + separator;
         } else {
             return null;
@@ -273,5 +288,4 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
     public void close() throws IOException {
         stream.close();
     }
-
 }

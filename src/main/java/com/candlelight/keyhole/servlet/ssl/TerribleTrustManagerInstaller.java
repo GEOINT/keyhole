@@ -3,7 +3,6 @@ package com.candlelight.keyhole.servlet.ssl;
 import com.candlelight.keyhole.ssl.TerribleTrustManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -61,5 +60,4 @@ public class TerribleTrustManagerInstaller implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent sce) {
 
     }
-
 }

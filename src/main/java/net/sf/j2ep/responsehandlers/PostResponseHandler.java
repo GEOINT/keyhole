@@ -34,5 +34,4 @@ public class PostResponseHandler extends BasicResponseHandler {
     public PostResponseHandler(PostMethod method) {
         super(method);
     }
-
 }

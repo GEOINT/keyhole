@@ -47,5 +47,4 @@ public abstract class ServerContainerBase implements ServerContainer {
     public void setRule(Rule rule) {
         this.rule = rule;
     }
-
 }

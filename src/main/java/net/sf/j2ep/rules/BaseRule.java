@@ -58,9 +58,7 @@ public abstract class BaseRule implements Rule {
         buffer.append("[");
         buffer.append(getClass().getName());
         buffer.append(": ");
-
         buffer.append("]");
-
         return buffer.toString();
     }
 }
