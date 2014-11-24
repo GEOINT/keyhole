@@ -146,26 +146,35 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
          * Using regex can be quite harsh sometimes so here is how
          * the regex trying to find links works
          * 
-         * \\b(href=|src=|action=|url:\\s*|url\\()([\"\'])
-         * This part is the identification of links, matching
+         *This part is the identification of links, matching
          * something like href=", href=' and href=
+         *
+         * (href=|src=|action=)[\"\']
+         *
+         * // old version => (href=|src=|action=|url:\\s*|url\\()([\"\'])
          * 
-         * (([^/]+://)([^/<>]+))?
          * This is to identify absolute paths. A link doesn't have
          * to be absolute therefor there is a ?.
          * 
-         * ([^\"\'>]*)
+         * ([^/]+://)([^/]+)?
+         *
+         * //old version => (([^/]+://)([^/<>]+))?
+         *
          * This is the link
+         *
+         * ([^\"\'>]+)
+         *
+         * //old version => ([^\"\'>]*)
+         *
+         *
+         *Ending " or '
+         * [\"\'] //unchanged
          * 
-         * [\"\']
-         * Ending " or '
          * 
          * $1 - link type, e.g. href=
-         * $2 - ", ' or whitespace
-         * $3 - The entire http://www.server.com if present
-         * $4 - The protocol, e.g http:// or ftp:// 
-         * $5 - The host name, e.g. www.server.com
-         * $6 - The link
+         * $2 - The protocol, e.g http:// or ftp:// 
+         * $3 - The host name, e.g. www.server.com
+         * $4 - The link
          */
         StringBuffer page = new StringBuffer();
 
@@ -177,13 +186,13 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
 //        Matcher matcher = linkPattern.matcher(stream.toString(encoding));
         while (matcher.find()) {
 
-            String link = matcher.group(6).replaceAll("\\$", "\\\\\\$");
+            String link = matcher.group(4).replaceAll("\\$", "\\\\\\$");
             if (link.length() == 0) {
                 link = "/";
             }
 
             String rewritten = null;
-            if (matcher.group(4) != null) {
+            if (matcher.group(2) != null) {
                 rewritten = handleExternalLink(matcher, link);
             } else if (link.startsWith("/")) {
                 rewritten = handleLocalLink(server, matcher, link);
@@ -224,15 +233,15 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
      * @return The link now rewritten
      */
     private String handleExternalLink(Matcher matcher, String link) {
-        String location = matcher.group(5) + link;
+        String location = matcher.group(3) + link;
         Server matchingServer = serverChain.getServerMapped(location);
 
         if (matchingServer != null) {
             link = link.substring(matchingServer.getPath().length());
             link = matchingServer.getRule().revert(link);
             String type = matcher.group(1);
-            String separator = matcher.group(2);
-            String protocol = matcher.group(4);
+            char separator = '"';
+            String protocol = matcher.group(2);
             return type + separator + protocol + ownHostName + contextPath + link + separator;
         } else {
             return null;
@@ -252,7 +261,7 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
         if (serverDir.equals("") || link.startsWith(serverDir + "/")) {
             link = server.getRule().revert(link.substring(serverDir.length()));
             String type = matcher.group(1);
-            String separator = matcher.group(2);
+            char separator = '"';
             return type + separator + contextPath + link + separator;
         } else {
             return null;

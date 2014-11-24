@@ -78,4 +78,16 @@
     </server>
     
     <!-- default -->
+    
+    
+    
+    <!-- testing -->
+    <!-- server className="net.sf.j2ep.servers.BaseServer"   
+            scheme="http"        
+            domainName="127.0.0.1:8080"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/proxyJenkins"/>
+        
+    </server -->  
+    
 </config>
