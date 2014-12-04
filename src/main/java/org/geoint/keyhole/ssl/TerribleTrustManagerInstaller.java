@@ -1,5 +1,7 @@
 package org.geoint.keyhole.ssl;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.net.ssl.HttpsURLConnection;
@@ -25,33 +27,28 @@ public class TerribleTrustManagerInstaller implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         logger.log(Level.WARNING, "This proxy currently disables ssl server"
                 + " valiation.  This will be fixed in a future version.");
-        
+
+        SSLContext sc = null;
         try {
-            //register it with the Java SSLContext
-            SSLContext sc = SSLContext.getInstance("SSL");
+            //register global accept trust manager with the Java SSLContext
+            sc = SSLContext.getInstance("SSL");
             sc.init(null, new TrustManager[]{new TerribleTrustManager()},
                     new java.security.SecureRandom());
+
+            //set this context as the JVM default SSL socket factory
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-            
-        } catch (Exception e) {
+
+            //also register with Apach httpclient3, as it does not use the 
+            //JVM default 
+            SslContextedSecureProtocolSocketFactory secureProtocolSocketFactory
+                    = new SslContextedSecureProtocolSocketFactory(sc, false);
+            Protocol.registerProtocol("https", new Protocol("https",
+                    (ProtocolSocketFactory) secureProtocolSocketFactory, 443));
+
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
             logger.log(Level.SEVERE, "Unable to register SSL work around, "
                     + "requsts to HTTPS servers with invalid certificates will "
                     + "not work.", e);
-        }
-        
-        try {
-            
-            //also register it with the Apache httpclient (sigh)
-            SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, new TrustManager[]{new TerribleTrustManager()},
-                    new java.security.SecureRandom());
-            SslContextedSecureProtocolSocketFactory secureProtocolSocketFactory
-                    = new SslContextedSecureProtocolSocketFactory(sc);
-            secureProtocolSocketFactory.setHostnameVerification(false);
-            Protocol.registerProtocol("https", new Protocol("https",
-                    (ProtocolSocketFactory) secureProtocolSocketFactory, 443));
-        } catch (Exception e) {
-            
         }
     }
 
