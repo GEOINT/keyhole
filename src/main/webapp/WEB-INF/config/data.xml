@@ -16,6 +16,12 @@
             isRewriting="true">
         <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/dovcot"/>
     </server>
+     <server className="net.sf.j2ep.servers.BaseServer" 
+            scheme="http"
+            domainName="j2ep.sourceforge.net"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/j2ep"/>
+    </server>
     <server className="net.sf.j2ep.servers.BaseServer"
             scheme="http"
             domainName="blog.dovecot.org"
@@ -55,8 +61,8 @@
     
     <!-- jenkins -->
     <server className="net.sf.j2ep.servers.BaseServer"
-            scheme="https"
-            domainName="96.127.34.194:6969/jenkins"
+            scheme="http"
+            domainName="127.0.0.1:56950"
             isRewriting="true">
         <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/jenkins"/>
     </server>
@@ -64,7 +70,7 @@
     <!-- archiva -->
     <server className="net.sf.j2ep.servers.BaseServer"
             scheme="https"
-            domainName="96.127.34.194:6969/archiva"
+            domainName="96.127.34.194:6969"
             isRewriting="true">
         <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/archiva"/>
     </server>
@@ -72,7 +78,7 @@
     <!-- scm-manager -->
     <server className="net.sf.j2ep.servers.BaseServer"
             scheme="https"
-            domainName="96.127.34.194:8080/svn"
+            domainName="96.127.34.194:8080"
             isRewriting="true">
         <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/svn"/>
     </server>
