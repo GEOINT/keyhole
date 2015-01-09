@@ -8,7 +8,7 @@
     <packaging>war</packaging>
 
     <name>keyhole</name>
-    <description>
+    <description> 
         This projects aim is to create a simple to use, GUI configurable,
         reverse proxy for the modern Java EE architecture.
         
@@ -29,6 +29,12 @@
             <roles>
                 <role>The guy who forked J2EP</role>
                 <role>Lead Developer of 'keyhole'</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Ted Przyzycki</name>
+            <roles>
+                <role>developer</role>
             </roles>
         </developer>
     </developers>
