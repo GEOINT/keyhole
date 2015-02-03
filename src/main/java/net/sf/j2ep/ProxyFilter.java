@@ -97,7 +97,7 @@ public class ProxyFilter implements Filter {
         }
 
         if (server == null) {
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);   
         } else {
             StringBuilder sb = new StringBuilder();
             sb.append((server.getScheme() != null)
@@ -121,19 +121,27 @@ public class ProxyFilter implements Filter {
 
                 responseHandler.process(httpResponse);
             } catch (HttpException e) {
-                logger.log(Level.WARNING, "Problem while connecting to server", e);
-                httpResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                logger.log(Level.WARNING, 
+                        "Problem while connecting to server", e);
+                httpResponse.setStatus(
+                        HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 server.setConnectionExceptionRecieved(e);
             } catch (UnknownHostException e) {
-                logger.log(Level.WARNING, "Could not connection to the host specified", e);
+                logger.log(Level.WARNING, 
+                        "Could not connection to the host specified", e);
                 httpResponse.setStatus(HttpServletResponse.SC_GATEWAY_TIMEOUT);
                 server.setConnectionExceptionRecieved(e);
             } catch (IOException e) {
-                logger.log(Level.WARNING, "Problem probably with the input being send, either with a Header or the Stream", e);
-                httpResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                logger.log(Level.WARNING, 
+                        "Problem probably with the input being send, "
+                                + "either with a Header or the Stream", e);
+                httpResponse.setStatus(
+                        HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             } catch (MethodNotAllowedException e) {
-                logger.log(Level.WARNING, "Incoming method could not be handled", e);
-                httpResponse.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+                logger.log(Level.WARNING, 
+                        "Incoming method could not be handled", e);
+                httpResponse.setStatus(
+                        HttpServletResponse.SC_METHOD_NOT_ALLOWED);
                 httpResponse.setHeader("Allow", e.getAllowedMethods());
             } finally {
                 if (responseHandler != null) {
@@ -199,7 +207,7 @@ public class ProxyFilter implements Filter {
             }
         }
 
-        return ResponseHandlerFactory.createResponseHandler(method);
+        return ResponseHandlerFactory.createResponseHandler(method);    
     }
 
     /**
@@ -213,10 +221,13 @@ public class ProxyFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         logger.info("init proxy filter");
-        AllowedMethodHandler.setAllowedMethods("OPTIONS,GET,HEAD,POST,PUT,DELETE,TRACE");
+        AllowedMethodHandler
+                .setAllowedMethods("OPTIONS,GET,HEAD,POST,PUT,DELETE,TRACE");
 
         httpClient = new HttpClient(new MultiThreadedHttpConnectionManager());
-        httpClient.getParams().setBooleanParameter(HttpClientParams.USE_EXPECT_CONTINUE, false);
+        httpClient.getParams()
+                .setBooleanParameter(
+                        HttpClientParams.USE_EXPECT_CONTINUE, false);
         httpClient.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
 
         String data = filterConfig.getInitParameter("dataUrl");
@@ -224,7 +235,8 @@ public class ProxyFilter implements Filter {
             serverChain = null;
         } else {
             try {
-                File dataFile = new File(filterConfig.getServletContext().getRealPath(data));
+                File dataFile = new File(
+                        filterConfig.getServletContext().getRealPath(data));
                 ConfigParser parser = new ConfigParser(dataFile);
                 serverChain = parser.getServerChain();
             } catch (Exception e) {

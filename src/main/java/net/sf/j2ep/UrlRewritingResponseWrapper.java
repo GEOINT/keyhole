@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import net.sf.j2ep.model.Server;
 
 import java.util.logging.Logger;
-import org.apache.commons.logging.LogFactory;
+
 
 /**
  * A wrapper for the normal HttpServletResponse, based on the content-type
@@ -39,7 +39,8 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author Anders Nyman
  */
-public final class UrlRewritingResponseWrapper extends HttpServletResponseWrapper {
+public final class UrlRewritingResponseWrapper
+        extends HttpServletResponseWrapper {
 
     /**
      * Stream we are using for the response.
@@ -79,12 +80,16 @@ public final class UrlRewritingResponseWrapper extends HttpServletResponseWrappe
     /**
      * Regex to find absolute links.
      */
-    private static final Pattern linkPattern = Pattern.compile("\\b([^/]+://)([^/]+)([\\w/]*)", Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
+    private static final Pattern linkPattern
+            = Pattern.compile("\\b([^/]+://)([^/]+)([\\w/]*)",
+                    Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
 
     /**
      * Regex to find the path in Set-Cookie headers.
      */
-    private static final Pattern pathAndDomainPattern = Pattern.compile("\\b(path=|domain=)([^;\\s]+);?", Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
+    private static final Pattern pathAndDomainPattern
+            = Pattern.compile("\\b(path=|domain=)([^;\\s]+);?",
+                    Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
 
     /**
      * Logging element supplied by commons-logging.
@@ -101,14 +106,18 @@ public final class UrlRewritingResponseWrapper extends HttpServletResponseWrappe
      * @param serverChain
      * @throws IOException When there is a problem with the streams
      */
-    public UrlRewritingResponseWrapper(HttpServletResponse response, Server server, String ownHostName, String contextPath, ServerChain serverChain) throws IOException {
+    public UrlRewritingResponseWrapper(HttpServletResponse response,
+            Server server, String ownHostName, String contextPath,
+            ServerChain serverChain) throws IOException {
         super(response);
         this.server = server;
         this.ownHostName = ownHostName;
         this.contextPath = contextPath;
         this.serverChain = serverChain;
 
-        outStream = new UrlRewritingOutputStream(response.getOutputStream(), response.getCharacterEncoding(), ownHostName, contextPath, serverChain);
+        outStream = new UrlRewritingOutputStream(response.getOutputStream(),
+                response.getCharacterEncoding(), ownHostName,
+                contextPath, serverChain);
         outWriter = new PrintWriter(outStream);
         originalWriter = new PrintWriter(response.getOutputStream());
     }
@@ -178,7 +187,8 @@ public final class UrlRewritingResponseWrapper extends HttpServletResponseWrappe
             if (matchingServer != null) {
                 link = link.substring(matchingServer.getPath().length());
                 link = matchingServer.getRule().revert(link);
-                matcher.appendReplacement(header, "$1" + ownHostName + contextPath + link);
+                matcher.appendReplacement(header, "$1"
+                        + ownHostName + contextPath + link);
             }
         }
         matcher.appendTail(header);
@@ -200,7 +210,8 @@ public final class UrlRewritingResponseWrapper extends HttpServletResponseWrappe
         while (matcher.find()) {
             if (matcher.group(1).equalsIgnoreCase("path=")) {
                 String path = server.getRule().revert(matcher.group(2));
-                matcher.appendReplacement(header, "$1" + contextPath + path + ";");
+                matcher.appendReplacement(header, "$1"
+                        + contextPath + path + ";");
             } else {
                 matcher.appendReplacement(header, "");
             }
@@ -275,6 +286,8 @@ public final class UrlRewritingResponseWrapper extends HttpServletResponseWrappe
      */
     private boolean shouldRewrite(String contentType) {
         String lowerCased = contentType.toLowerCase();
-        return (lowerCased.contains("html") || lowerCased.contains("css") || lowerCased.contains("javascript"));
+        return (lowerCased.contains("html")
+                || lowerCased.contains("css")
+                || lowerCased.contains("javascript"));
     }
 }

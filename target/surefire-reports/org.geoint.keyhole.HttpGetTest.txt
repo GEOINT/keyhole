@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.geoint.keyhole.HttpGetTest
+-------------------------------------------------------------------------------
+Tests run: 34, Failures: 0, Errors: 0, Skipped: 2, Time elapsed: 6.147 sec - in org.geoint.keyhole.HttpGetTest

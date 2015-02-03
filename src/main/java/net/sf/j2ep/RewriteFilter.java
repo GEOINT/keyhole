@@ -17,6 +17,9 @@ package net.sf.j2ep;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Level;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -50,6 +53,8 @@ public class RewriteFilter implements Filter {
      * The incoming request is first processed to identify what resource we want
      * to proxy.
      *
+     * @param request
+     * @param response
      * @param filterChain
      * @throws java.io.IOException
      * @throws javax.servlet.ServletException
@@ -59,30 +64,64 @@ public class RewriteFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain filterChain) throws IOException, ServletException {
-        
+
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
         if (response.isCommitted()) {
-            logger.info("Not proxying, already committed.");
+            logger.info("Not proxying, already committed.");  
         } else if (!(request instanceof HttpServletRequest)) {
-            logger.info("Request is not HttpRequest, will only handle HttpRequests.");
-        } else if (!(response instanceof HttpServletResponse)) {
-            logger.info("Request is not HttpResponse, will only handle HttpResponses.");
+            logger.info("Request is not HttpRequest, "
+                    + "will only handle HttpRequests.");
+        } else if (!(response instanceof HttpServletResponse)) {    
+            logger.info("Request is not HttpResponse, "
+                    + "will only handle HttpResponses.");
         } else {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             HttpServletRequest httpRequest = (HttpServletRequest) request;
 
+            //printing request/response headers to the console 
+            //for debugging purposes
+            List<String> requestHeaders
+                    = Collections.list(httpRequest.getHeaderNames());
+            
+            requestHeaders.stream().forEach((s) -> {
+                System.out.println( "requestHeaderField: {0}" + s);
+                System.out.println( "requestHeaderValue: {0}" +
+                        httpRequest.getHeader(s));
+            });
+
+            httpResponse.getHeaderNames().stream().forEach((s) -> {
+                System.out.println( "responseHeaderField: {0}" + s);
+                System.out.println( "responseHeaderValue: {0}" +
+                        httpResponse.getHeader(s));
+            });
+            System.out.println( "httpRequest.getContextPath(): {0}" +
+                    httpRequest.getContextPath());
+
+            
+            //selecting the correct 'server' from the data.xml file
             Server server = serverChain.evaluate(httpRequest);
             if (server == null) {
-                logger.info("Could not find a rule for this request, will not do anything.");
+                logger.info("Could not find a rule for this request, "
+                        + "will not do anything.");
                 filterChain.doFilter(request, response);
             } else {
                 httpRequest.setAttribute("proxyServer", server);
 
-                String ownHostName = request.getServerName() + ":" + request.getServerPort();
+                //print request/response headers to find the field needed for 
+//                //the redirect
+                //@todo retrieving the port from the config file, 
+                //and not from the request url
+                String ownHostName = server.getDomainName();
+//                String ownHostName = request.getServerName() + ":" 
+//                        + request.getServerPort();
+//                logger.log(Level.WARNING, "ownHostName: {0}", ownHostName);
+
                 UrlRewritingResponseWrapper wrappedResponse;
-                wrappedResponse = new UrlRewritingResponseWrapper(httpResponse, server, ownHostName, httpRequest.getContextPath(), serverChain);
+                wrappedResponse = new UrlRewritingResponseWrapper(httpResponse,
+                        server, ownHostName, httpRequest.getContextPath(),
+                        serverChain);
 
                 filterChain.doFilter(httpRequest, wrappedResponse);
 

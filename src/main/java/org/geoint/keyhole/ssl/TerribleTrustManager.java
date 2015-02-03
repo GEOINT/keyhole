@@ -1,10 +1,8 @@
 package org.geoint.keyhole.ssl;
 
 import java.security.cert.X509Certificate;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.net.ssl.X509TrustManager;
 
 /**
@@ -38,8 +36,14 @@ public class TerribleTrustManager implements X509TrustManager {
         if (certs == null) {
             return "";
         }
-        return Arrays.stream(certs).map(
-                (c) -> c.getSubjectDN().getName())
-                .collect(Collectors.joining(","));
+//        StringBuilder certString = new StringBuilder();
+//        for (int i = 0; i < certs.length; i++) {
+//            certString.append(certs[i].getSubjectDN().getName()).append(",");
+//        }
+//        return Arrays.stream(certs).map(
+//                (c) -> c.getSubjectDN().getName())
+//                .collect(Collectors.joining(","));
+
+        return certs[0].getSubjectDN().getName();
     }
 }
