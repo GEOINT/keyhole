@@ -1,0 +1,29 @@
+Index: src/net/sf/j2ep/UrlRewritingResponseWrapper.java
+===================================================================
+--- src/net/sf/j2ep/UrlRewritingResponseWrapper.java	(revision 235)
++++ src/net/sf/j2ep/UrlRewritingResponseWrapper.java	(working copy)
+@@ -196,8 +196,13 @@
+         Matcher matcher = pathAndDomainPattern.matcher(value);
+         while (matcher.find()) {
+             if (matcher.group(1).equalsIgnoreCase("path=")) {
+-                String path = server.getRule().revert(matcher.group(2));
+-                matcher.appendReplacement(header, "$1" + contextPath + path + ";"); 
++                String link = matcher.group(2);
++                link = link.substring(server.getPath().length());
++                link = server.getRule().revert(link);
++                if(link.length() == 0){
++                	link = "/";
++                }
++                matcher.appendReplacement(header, "$1" + contextPath + link + ";"); 
+             } else {
+                 matcher.appendReplacement(header, "");
+             }
+@@ -206,7 +211,7 @@
+         matcher.appendTail(header);
+         log.debug("Set-Cookie header rewritten \"" + value + "\" >> " + header.toString());
+         return header.toString();
+-    }
++    } 
+     
+     /**
+      * Based on the value in the content-type header we either

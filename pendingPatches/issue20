@@ -1,0 +1,10 @@
+When there is a apache with mod_jk in front of the reverse proxy, then it fails. The problem is chunked encoding. The header is set, but it is from the source which as been called. This results in a white page, mostly in firefox. The fix is to remove the
+
+encoding header and letting the tomcat put it on again.
+
+This is my fix for the problem
+BasicResponseholder.setHeaders
+
+boolean encoding = name.equalsIgnoreCase("transfer-encoding");
+
+if (!contentLength && !connection && !encoding) {

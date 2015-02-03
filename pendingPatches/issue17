@@ -1,0 +1,13 @@
+I have a case where https service proxies requests to a back-end http service. 
+The ProxyFilter enforces the use of same scheme by doing request.getScheme().
+ In my case I just wrote my own filter, but it'd be a smarter design if users 
+would be allowed to optionally also specify the protocol with domain name and 
+only if it's not specified use the same protocol. So basically, in ProxyFilter 
+something like: 
+
+String url = server.getDomainName().startsWith("http") 
+? server.getDomainName() 
+: request.getScheme() + "://" + server.getDomainName();
+
+// Or, more generic: if server.getDomainName.contains("://") ...
+url += server.getPath() + uri;
