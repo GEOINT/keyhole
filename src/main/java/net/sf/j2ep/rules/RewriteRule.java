@@ -22,10 +22,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.logging.Logger;
-<<<<<<< HEAD
-import org.apache.commons.logging.LogFactory;
-=======
->>>>>>> keyhole/master
+
 
 /**
  * A rule using regular expressions to rewrite the URI. At first the expression
