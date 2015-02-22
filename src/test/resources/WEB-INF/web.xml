@@ -5,6 +5,8 @@
         <description>SSL trust manager overridding</description>
         <listener-class>org.geoint.keyhole.ssl.TerribleTrustManagerInstaller</listener-class>
     </listener>
+    
+    
     <filter>
         <filter-name>Rewriter</filter-name>
         <filter-class>net.sf.j2ep.RewriteFilter</filter-class>
@@ -13,9 +15,12 @@
             <param-value>testData.xml</param-value>
         </init-param>
     </filter>
+    <!-- this needs to be more specific, or these filters will catch everything 
+        w/o letting the auth filter take a look.  or will the filter chain 
+        allow for each of the filters to look at the request/response? -->
     <filter-mapping>
         <filter-name>Rewriter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/keyhole</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>Proxy</filter-name>
@@ -23,6 +28,46 @@
     </filter>
     <filter-mapping>
         <filter-name>Proxy</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/keyhole</url-pattern>
     </filter-mapping>
+    
+    <servlet>
+        <servlet-name>AuthenticationServlet</servlet-name>
+        <servlet-class>org.geoint.keyhole.test.AuthenticationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthenticationServlet</servlet-name>
+        <url-pattern>/AuthenticationServlet</url-pattern>
+    </servlet-mapping>
+            
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>org.geoint.keyhole.test.AuthenticationFilter</filter-class>        
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/AuthenticationFilter</url-pattern>        
+    </filter-mapping>
+    <!--security-constraint>
+        <display-name>J-Security-Check Authentication</display-name>
+        <web-resource-collection>
+            <web-resource-name>WRCollection</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>Proxy User</role-name>            
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>        
+    </security-constraint>
+    < login-config>        
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/AuthTest.html</form-login-page>
+            <form-error-page>/AuthError.html</form-error-page>
+        </form-login-config>               
+    </login-config -->
+    
 </web-app>

@@ -25,7 +25,6 @@ import net.sf.j2ep.model.ServerContainer;
 
 import org.apache.commons.digester3.Digester;
 import java.util.logging.Logger;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * The config parser uses Digester to parse the config file. A rule chain with

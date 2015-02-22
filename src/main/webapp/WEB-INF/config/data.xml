@@ -32,7 +32,7 @@
             scheme="http"
             domainName="www.tecmint.com"
             isRewriting="true">
-        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/tecmint"/>
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/tecmint/"/>
     </server>
     
     <!-- requested by ken -->
@@ -41,31 +41,31 @@
             scheme="http"
             domainName="dovecot.org"
             isRewriting="true">
-        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/dovcot"/>
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/dovcot/"/>
     </server>
      <server className="net.sf.j2ep.servers.BaseServer" 
             scheme="http"
             domainName="j2ep.sourceforge.net"
             isRewriting="true">
-        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/j2ep"/>
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/j2ep/"/>
     </server>
     <server className="net.sf.j2ep.servers.BaseServer"
             scheme="http"
             domainName="blog.dovecot.org"
             isRewriting="true">
-        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/blog.dovcot"/>
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/blog.dovcot/"/>
     </server>
     <server className="net.sf.j2ep.servers.BaseServer"
             scheme="http"
             domainName="wiki2.dovecot.org"
             isRewriting="true">
-        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/wiki2.dovcot"/>
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/wiki2.dovcot/"/>
     </server>
     <server className="net.sf.j2ep.servers.BaseServer"
             scheme="http"
             domainName="store.dovecot.fi"
             isRewriting="true">
-        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/store.dovcot"/>
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/store.dovcot/"/>
     </server>
     
     <!-- requested by jbell -->
@@ -73,10 +73,18 @@
             scheme="http"
             domainName="wiki.samba.org"
             isRewriting="true">
-        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/samba"/>
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/samba/"/>
     </server>
     
-
+    <!-- requested by cpriester -->
+    <server className="net.sf.j2ep.servers.BaseServer"
+            scheme="https"
+            domainName="my.vmware.com"
+            isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/vmware/"/>
+    </server>
+    
+    
     
     <!-- GF admin console -->
     <!-- server className="net.sf.j2ep.servers.BaseServer"

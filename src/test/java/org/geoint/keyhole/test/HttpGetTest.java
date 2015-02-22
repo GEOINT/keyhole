@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.geoint.keyhole;
+package org.geoint.keyhole.test;
 
 import java.io.File;
 import java.net.HttpURLConnection;
@@ -39,7 +39,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Tests HTTP GET requests using Embedded Glassfish
+ * Tests HTTP GET requests using managed tomcat
  */
 @RunWith(Arquillian.class)
 public class HttpGetTest {
@@ -73,16 +73,17 @@ public class HttpGetTest {
      *
      * @return ShrinkWrap bundled test jar
      */
-    @Deployment
-    @OverProtocol("Servlet 3.0")
+    @OverProtocol("Servlet 3.0") 
+    @Deployment 
     public static Archive<?> init() {
         return ShrinkWrap.create(WebArchive.class, "keyhole.war")
-                .addPackage(".net.sf.j2ep")
+                .addPackage("net.sf.j2ep")
                 .addAsWebInfResource(
                         new File("src/test/resources/WEB-INF/web.xml"))
                 .addAsWebResource(
                         new File("src/test/resources/WEB-INF/testData.xml"));
     }
+    
 
     @ArquillianResource
     URL baseUrl;
@@ -104,8 +105,8 @@ public class HttpGetTest {
      *
      * @throws Exception
      */
-    @Ignore
     @RunAsClient
+    @Ignore
     @Test
     public void testJenkinsExtension() throws Exception {
         URL url = new URL(baseUrl.toString() + "jenkins");
@@ -421,7 +422,6 @@ public class HttpGetTest {
      *
      * Ignore the test for now. can no longer find this tag on the gf admin page
      */
-    @Ignore
     @RunAsClient
     @Test
     public void testGlassfishDojoMatcher() {

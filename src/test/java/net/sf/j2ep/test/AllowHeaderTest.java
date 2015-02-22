@@ -21,6 +21,7 @@ import net.sf.j2ep.model.AllowedMethodHandler;
 
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.OptionsMethod;
+import org.junit.Test;
 
 public class AllowHeaderTest extends TestCase {
 
@@ -29,6 +30,7 @@ public class AllowHeaderTest extends TestCase {
         super.setUp();
     }
     
+    @Test
     public void testSetAllowed() {
         String allow = "OPTIONS,PROPFIND,OP,PUT";
         AllowedMethodHandler.setAllowedMethods(allow);
@@ -44,6 +46,7 @@ public class AllowHeaderTest extends TestCase {
         assertFalse("Checking GET method", AllowedMethodHandler.methodAllowed(new GetMethod()));
     }
     
+    @Test
     public void testprocessAllowHeader() {
         String allow = "OPTIONS,PROPFIND,OP,PUT";
         String correct = "OPTIONS,PUT,";

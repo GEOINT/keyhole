@@ -71,7 +71,7 @@ public class ProxyFilter implements Filter {
 
     /**
      * Implementation of a reverse-proxy. All request go through here. This is
-     * the main class where are handling starts.
+     * the main class where the handling starts.
      *
      * @param request
      * @param response
@@ -84,7 +84,6 @@ public class ProxyFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain filterChain) throws IOException, ServletException {
-        
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
@@ -97,7 +96,7 @@ public class ProxyFilter implements Filter {
         }
 
         if (server == null) {
-            filterChain.doFilter(request, response);   
+            filterChain.doFilter(request, response);
         } else {
             StringBuilder sb = new StringBuilder();
             sb.append((server.getScheme() != null)
@@ -121,24 +120,24 @@ public class ProxyFilter implements Filter {
 
                 responseHandler.process(httpResponse);
             } catch (HttpException e) {
-                logger.log(Level.WARNING, 
+                logger.log(Level.WARNING,
                         "Problem while connecting to server", e);
                 httpResponse.setStatus(
                         HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 server.setConnectionExceptionRecieved(e);
             } catch (UnknownHostException e) {
-                logger.log(Level.WARNING, 
+                logger.log(Level.WARNING,
                         "Could not connection to the host specified", e);
                 httpResponse.setStatus(HttpServletResponse.SC_GATEWAY_TIMEOUT);
                 server.setConnectionExceptionRecieved(e);
             } catch (IOException e) {
-                logger.log(Level.WARNING, 
+                logger.log(Level.WARNING,
                         "Problem probably with the input being send, "
-                                + "either with a Header or the Stream", e);
+                        + "either with a Header or the Stream", e);
                 httpResponse.setStatus(
                         HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             } catch (MethodNotAllowedException e) {
-                logger.log(Level.WARNING, 
+                logger.log(Level.WARNING,
                         "Incoming method could not be handled", e);
                 httpResponse.setStatus(
                         HttpServletResponse.SC_METHOD_NOT_ALLOWED);
@@ -183,6 +182,7 @@ public class ProxyFilter implements Filter {
     private ResponseHandler executeRequest(HttpServletRequest httpRequest,
             String url) throws MethodNotAllowedException, IOException,
             HttpException {
+
         RequestHandler requestHandler = RequestHandlerFactory
                 .createRequestMethod(httpRequest.getMethod());
 
@@ -207,7 +207,7 @@ public class ProxyFilter implements Filter {
             }
         }
 
-        return ResponseHandlerFactory.createResponseHandler(method);    
+        return ResponseHandlerFactory.createResponseHandler(method);
     }
 
     /**

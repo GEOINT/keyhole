@@ -29,7 +29,6 @@ import net.sf.j2ep.model.Server;
 
 import java.util.logging.Logger;
 
-
 /**
  * A wrapper for the normal HttpServletResponse, based on the content-type
  * either the normal output stream of a wrapped stream will be returned. The
@@ -161,6 +160,9 @@ public final class UrlRewritingResponseWrapper
         } else {
             value = originalValue;
         }
+        logger.log(Level.INFO,
+                "setHeader name: {0} original value: {1} new value: {2}",
+                new Object[]{name, originalValue, value});
         super.setHeader(name, value);
     }
 
@@ -192,7 +194,7 @@ public final class UrlRewritingResponseWrapper
             }
         }
         matcher.appendTail(header);
-        logger.log(Level.FINEST, "Location header rewritten {0} >> {1}",
+        logger.log(Level.INFO, "Location header rewritten {0} >> {1}",
                 new Object[]{value, header.toString()});
         return header.toString();
     }
@@ -217,8 +219,9 @@ public final class UrlRewritingResponseWrapper
             }
 
         }
+        //@todo set logging from finest to info
         matcher.appendTail(header);
-        logger.log(Level.FINEST, "Set-Cookie header rewritten \"{0}\" >> {1}",
+        logger.log(Level.INFO, "Set-Cookie header rewritten \"{0}\" >> {1}",
                 new Object[]{value, header.toString()});
         return header.toString();
     }

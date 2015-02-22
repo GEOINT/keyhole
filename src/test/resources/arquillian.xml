@@ -1,19 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <arquillian xmlns="http://jboss.org/schema/arquillian"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="
-        http://jboss.org/schema/arquillian
-        http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
-    <container qualifier="glassfish-embedded" default="true">
-        <configuration>
-            <!--            <property name="resourcesXml">
-                src/main/webapp/WEB-INF/glassfish-web.xml
-            </property>-->
-            
-        </configuration>
-        <protocol type="Servlet 3.0">
-            <property name="host">localhost</property>
-            <property name="port">8181</property>
-        </protocol>
-    </container>
+            xsi:schemaLocation="http://jboss.org/schema/arquillian
+        http://www.jboss.org/schema/arquillian/arquillian_1_0.xsd">
+    <group qualifier="keyhole-test-cluster" default="true">
+        
+        
+        <container qualifier="glassfish-embed" default="true">
+            <configuration>           
+                <!-- property name="glassFishHome">/devSpace/tools/glassfish-4.0</property  -->            
+            </configuration>
+            <protocol type="Servlet 3.0">
+                <property name="host">localhost</property>
+                <property name="port">8080</property>
+            </protocol>
+        </container>                                                                                
+        
+        <!--  container qualifier="tomcat-host" default="true">
+            <configuration>
+                <property name="catalinaHome">/devSpace/tools/apache-tomcat-7.0.59</property>
+            </configuration>
+            <protocol type="Servlet 3.0">
+                <property name="host">localhost</property>
+                <property name="port">8080</property>
+            </protocol>
+        </container>
+        
+        <container qualifier="servlet-listener-8181">
+            <configuration>
+                <property name="catalinaHome">/devSpace/tools/apache-tomcat-7.0.59</property>
+            </configuration>
+            <protocol type="Servlet 3.0">
+                <property name="host">localhost</property>
+                <property name="port">8181</property>
+            </protocol>
+        </container  -->
+        
+        <!-- container qualifier="logging-handler">
+            <configuration>
+                <property name="catalinaHome">/devSpace/tools/apache-tomcat-7.0.59</property>
+            </configuration>
+            <protocol type="Servlet 3.0">
+                <property name="host">localhost</property>
+                <property name="port">8080</property>
+            </protocol>
+        </container  -->  
+        
+        
+        
+        
+        
+        
+        <!-- container qualifier="servlet-listener-8181" >
+            <configuration>          
+                <property name="glassFishHome">/devSpace/tools/glassfish-4.0</property>         
+                <property name="bindHttpsPort">8181</property>
+            </configuration>
+            <protocol type="Servlet 3.0">                 
+            </protocol>
+        </container   -->
+        <!-- container qualifier="servlet-listener-4848">
+            <configuration>                
+                <property name="bindHttpsPort">4848</property>
+            </configuration>
+            <protocol type="Servlet 3.0">                    
+                <property name="host">localhost</property>
+                <property name="port">4848</property>
+            </protocol>
+        </container -->
+        <!-- container qualifier="logging-handler">
+            <configuration>                
+            </configuration>
+            <protocol type="Servlet 3.0">
+                <property></property>
+            </protocol>
+        </container   -->
+    </group>
 </arquillian>

@@ -31,7 +31,6 @@ import net.sf.j2ep.model.RequestHandler;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
 import java.util.logging.Logger;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * A basic implementation of the RequestHandler. Includes a method to set the
@@ -60,7 +59,7 @@ public abstract class RequestHandlerBase implements RequestHandler {
 
     /**
      * Will write all request headers stored in the request to the method that
-     * are not in the set of banned headers. The Accept-Endocing header is also
+     * are not in the set of banned headers. The Accept-Encoding header is also
      * changed to allow compressed content connection to the server even if the
      * end client doesn't support that. A Via headers is created as well in
      * compliance with the RFC.
@@ -70,6 +69,7 @@ public abstract class RequestHandlerBase implements RequestHandler {
      * @throws HttpException
      */
     protected void setHeaders(HttpMethod method, HttpServletRequest request) throws HttpException {
+
         Enumeration headers = request.getHeaderNames();
         String connectionToken = request.getHeader("connection");
 

@@ -76,7 +76,8 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
      * Regex matching links in the HTML.
      */
     private static final Pattern linkPattern
-            = Pattern.compile("\\b(href=|src=|action=|url[(])([\"\']?)(([^/]+://)([^/<>]+))?([^\"\'>\\)]*)([\"\']?)",
+            = Pattern.compile("\\b(href=|src=|action=|url[(]|setModulePrefix[(]\"webui.suntheme\", \")([\"\']?)(([^/]+://)([^/<>]+))?([^\"\'>\\)]*)([\"\']?)",
+                    //            = Pattern.compile("\\b(href=|src=|action=|url[(])([\"\']?)(([^/]+://)([^/<>]+))?([^\"\'>\\)]*)([\"\']?)",
                     Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
 //            = Pattern.compile("\\b(href=|src=|action=|url\\()([\"\'])(([^/]+://)([^/<>]+))?([^\"\'>]*)[\"\']", 
     //Pattern.CASE_INSENSITIVE | Pattern.CANON_EQ);
@@ -154,7 +155,7 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
          * 
          * (([^/]+://)([^/<>]+))?
          * This is to identify absolute paths. A link doesn't have
-         * to be absolute therefor there is a ?.
+         * to be absolute therefore there is a ?.
          * 
          * ([^\"\'>]*)
          * This is the link
@@ -178,7 +179,6 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
                 CharBuffer.wrap(stream.toString(encoding)));
         Matcher matcher = linkPattern.matcher(decoder.decode(buf));
 //        Matcher matcher = linkPattern.matcher(stream.toString(encoding));
-        System.out.println("matcher group count: " + matcher.groupCount());
         while (matcher.find()) {
 
             String link = matcher.group(6).replaceAll("\\$", "\\\\\\$");
@@ -188,6 +188,7 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
 
             String rewritten = null;
             if (matcher.group(4) != null) {
+                System.out.println("matcher group 4: " + matcher.group(4));
                 rewritten = handleExternalLink(matcher, link);
             } else if (link.startsWith("/")) {
                 rewritten = handleLocalLink(server, matcher, link);
@@ -199,6 +200,7 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
             }
         }
         matcher.appendTail(page);
+
         originalStream.print(page.toString());
     }
 
@@ -271,7 +273,6 @@ public final class UrlRewritingOutputStream extends ServletOutputStream {
         }
     }
 
-    
     /**
      * @throws java.io.IOException
      * @see java.io.Closeable#close()

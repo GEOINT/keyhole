@@ -61,19 +61,19 @@ public class RewriteFilter implements Filter {
      * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest,
      * javax.servlet.ServletResponse, javax.servlet.FilterChain)
      */
-    @Override
+    @Override    
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain filterChain) throws IOException, ServletException {
-
         request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");           
+        
 
         if (response.isCommitted()) {
-            logger.info("Not proxying, already committed.");  
+            logger.info("Not proxying, already committed.");
         } else if (!(request instanceof HttpServletRequest)) {
             logger.info("Request is not HttpRequest, "
                     + "will only handle HttpRequests.");
-        } else if (!(response instanceof HttpServletResponse)) {    
+        } else if (!(response instanceof HttpServletResponse)) {
             logger.info("Request is not HttpResponse, "
                     + "will only handle HttpResponses.");
         } else {
@@ -82,24 +82,23 @@ public class RewriteFilter implements Filter {
 
             //printing request/response headers to the console 
             //for debugging purposes
-            List<String> requestHeaders
-                    = Collections.list(httpRequest.getHeaderNames());
-            
-            requestHeaders.stream().forEach((s) -> {
-                System.out.println( "requestHeaderField: {0}" + s);
-                System.out.println( "requestHeaderValue: {0}" +
-                        httpRequest.getHeader(s));
-            });
+//            List<String> requestHeaders
+//                    = Collections.list(httpRequest.getHeaderNames());
+//
+//            requestHeaders.stream().forEach((s) -> {
+//                System.out.println("requestHeaderField: {0}" + s);
+//                System.out.println("requestHeaderValue: {0}"
+//                        + httpRequest.getHeader(s));
+//            });
+//
+//            httpResponse.getHeaderNames().stream().forEach((s) -> {
+//                System.out.println("responseHeaderField: {0}" + s);
+//                System.out.println("responseHeaderValue: {0}"
+//                        + httpResponse.getHeader(s));
+//            });
+//            System.out.println("httpRequest.getContextPath(): {0}"
+//                    + httpRequest.getContextPath());
 
-            httpResponse.getHeaderNames().stream().forEach((s) -> {
-                System.out.println( "responseHeaderField: {0}" + s);
-                System.out.println( "responseHeaderValue: {0}" +
-                        httpResponse.getHeader(s));
-            });
-            System.out.println( "httpRequest.getContextPath(): {0}" +
-                    httpRequest.getContextPath());
-
-            
             //selecting the correct 'server' from the data.xml file
             Server server = serverChain.evaluate(httpRequest);
             if (server == null) {
