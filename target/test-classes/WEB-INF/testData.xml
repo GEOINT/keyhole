@@ -5,21 +5,29 @@
             Support for Arquillian test framework
     -->
     
+    
     <server className="net.sf.j2ep.servers.BaseServer"
+    scheme="https"
+    domainName="localhost:8181/AuthenticationServlet"
+    isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/AuthenticationServlet"/>
+    </server>
+    
+    <!-- server className="net.sf.j2ep.servers.BaseServer"
     scheme="http"
     domainName="localhost:4848/common/index.jsf"
     isRewriting="true">
         <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/glassfish/" />
         
-    </server>
+    </server  -->
     
-   <server className="net.sf.j2ep.servers.BaseServer"
+   <!-- server className="net.sf.j2ep.servers.BaseServer"
             scheme="http"                       
             domainName="localhost:8080"
             isRewriting="true">
         <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/jenkins/"/>
         
-    </server>
+    </server  -->
     
      <!-- rule className="net.sf.j2ep.rules.CompositeRule">
             <rules>               

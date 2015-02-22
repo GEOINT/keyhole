@@ -1,0 +1,14 @@
+-------------------------------------------------------------------------------
+Test set: org.geoint.keyhole.test.AuthenticationTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.01 sec <<< FAILURE! - in org.geoint.keyhole.test.AuthenticationTest
+org.geoint.keyhole.test.AuthenticationTest  Time elapsed: 0.01 sec  <<< ERROR!
+java.lang.IllegalArgumentException: Cannot export a stream file to existing directory: /tmp
+	at org.jboss.shrinkwrap.impl.base.exporter.AbstractStreamExporterImpl.getOutputStreamToFile(AbstractStreamExporterImpl.java:81)
+	at org.jboss.shrinkwrap.impl.base.exporter.AbstractStreamExporterImpl.exportTo(AbstractStreamExporterImpl.java:144)
+	at org.geoint.keyhole.test.AuthenticationTest.startUp(AuthenticationTest.java:72)
+
+org.geoint.keyhole.test.AuthenticationTest  Time elapsed: 0.01 sec  <<< ERROR!
+java.lang.NullPointerException: null
+	at org.geoint.keyhole.test.AuthenticationTest.cleanUp(AuthenticationTest.java:120)
+
