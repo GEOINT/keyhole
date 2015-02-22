@@ -2,7 +2,7 @@
 <config>
     
     <server className="net.sf.j2ep.servers.BaseServer"
-        scheme="http"
+        scheme="https"
         domainName="localhost:4848"
         isRewriting="true"
     >   
