@@ -142,7 +142,7 @@ public class RewriteFilter implements Filter {
         if (data == null) {
             throw new ServletException("dataUrl is required.");
         } else {
-            try {
+            try {                
                 File dataFile = new File(filterConfig.getServletContext().getRealPath(data));
                 ConfigParser parser = new ConfigParser(dataFile);
                 serverChain = parser.getServerChain();

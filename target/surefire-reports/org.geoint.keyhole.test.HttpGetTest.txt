@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
 Test set: org.geoint.keyhole.test.HttpGetTest
 -------------------------------------------------------------------------------
-Tests run: 34, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 14.486 sec - in org.geoint.keyhole.test.HttpGetTest
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 2.411 sec <<< FAILURE! - in org.geoint.keyhole.test.HttpGetTest
+org.geoint.keyhole.test.HttpGetTest  Time elapsed: 2.411 sec  <<< ERROR!
+java.lang.RuntimeException: Could not invoke deployment method: public static org.jboss.shrinkwrap.api.Archive org.geoint.keyhole.test.HttpGetTest.init()
+	at org.jboss.shrinkwrap.api.asset.FileAsset.<init>(FileAsset.java:49)
+	at org.jboss.shrinkwrap.impl.base.container.WebContainerBase.addAsWebResource(WebContainerBase.java:166)
+	at org.geoint.keyhole.test.HttpGetTest.init(HttpGetTest.java:80)
+

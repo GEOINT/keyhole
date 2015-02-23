@@ -76,12 +76,12 @@ public class HttpGetTest {
     @OverProtocol("Servlet 3.0") 
     @Deployment 
     public static Archive<?> init() {
-        return ShrinkWrap.create(WebArchive.class, "keyhole.war")
-                .addPackage("net.sf.j2ep")
+        return ShrinkWrap.create(WebArchive.class, "keyhole.war")                               
+                .addAsWebResource(
+                        new File("src/test/resources/WEB-INF/testData.xml"))
                 .addAsWebInfResource(
                         new File("src/test/resources/WEB-INF/web.xml"))
-                .addAsWebResource(
-                        new File("src/test/resources/WEB-INF/testData.xml"));
+                .addPackage("net.sf.j2ep") ;
     }
     
 

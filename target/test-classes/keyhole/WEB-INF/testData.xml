@@ -5,12 +5,19 @@
             Support for Arquillian test framework
     -->
     
-    
     <server className="net.sf.j2ep.servers.BaseServer"
     scheme="https"
-    domainName="localhost:8181/AuthenticationServlet"
+    domainName="127.0.0.1:8181/test"
     isRewriting="true">
-        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/AuthenticationServlet"/>
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/proxyHttpsTest"/>
+    </server>
+    
+    
+    <server className="net.sf.j2ep.servers.BaseServer"
+    scheme="http"
+    domainName="127.0.0.1:8080/test"
+    isRewriting="true">
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/proxyTest"/>
     </server>
     
     <!-- server className="net.sf.j2ep.servers.BaseServer"

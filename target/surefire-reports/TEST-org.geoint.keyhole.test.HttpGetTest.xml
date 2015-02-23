@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.geoint.keyhole.test.HttpGetTest" time="0.392" tests="34" errors="0" skipped="1" failures="0">
+<testsuite name="org.geoint.keyhole.test.HttpGetTest" time="2.411" tests="1" errors="1" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/jdk1.8.0_11/jre/lib/amd64"/>
@@ -59,40 +59,94 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="testGlassfishImageTagMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.023"/>
-  <testcase name="testJenkinsJobWarLinkMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.008"/>
-  <testcase name="testJenkinsJobBuildLinkMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.008"/>
-  <testcase name="testJenkinsExtension" classname="org.geoint.keyhole.test.HttpGetTest" time="0">
-    <skipped/>
+  <testcase name="org.geoint.keyhole.test.HttpGetTest" classname="org.geoint.keyhole.test.HttpGetTest" time="2.411">
+    <error message="Could not invoke deployment method: public static org.jboss.shrinkwrap.api.Archive org.geoint.keyhole.test.HttpGetTest.init()" type="java.lang.RuntimeException"><![CDATA[java.lang.RuntimeException: Could not invoke deployment method: public static org.jboss.shrinkwrap.api.Archive org.geoint.keyhole.test.HttpGetTest.init()
+	at org.jboss.shrinkwrap.api.asset.FileAsset.<init>(FileAsset.java:49)
+	at org.jboss.shrinkwrap.impl.base.container.WebContainerBase.addAsWebResource(WebContainerBase.java:166)
+	at org.geoint.keyhole.test.HttpGetTest.init(HttpGetTest.java:80)
+]]></error>
+    <system-out><![CDATA[Found populator: org.glassfish.kernel.embedded.EmbeddedDomainXml
+
+
+ rewrites summary:
+
+
+group0
+
+
+
+
+
+
+
+group1
+
+
+
+
+
+
+
+group2
+
+
+
+
+
+
+
+group3
+
+
+
+
+
+
+
+group4
+
+
+
+
+
+
+
+group5
+
+
+
+
+
+
+
+group6
+
+
+
+
+
+
+]]></system-out>
+    <system-err><![CDATA[Feb 23, 2015 1:40:30 PM org.glassfish.security.services.impl.authorization.AuthorizationServiceImpl initialize
+INFO: Authorization Service has successfully initialized.
+Feb 23, 2015 1:40:30 PM org.hibernate.validator.internal.util.Version <clinit>
+INFO: HV000001: Hibernate Validator 5.0.0.Final
+Feb 23, 2015 1:40:31 PM com.sun.enterprise.v3.services.impl.GrizzlyProxy start0
+INFO: Grizzly Framework 2.3.15 started in: 19ms - bound to [/0.0.0.0:8181]
+Feb 23, 2015 1:40:31 PM com.sun.enterprise.v3.services.impl.GrizzlyService createNetworkProxy
+INFO: Network listener https-listener on port 0 disabled per domain.xml
+Feb 23, 2015 1:40:31 PM com.sun.enterprise.v3.admin.adapter.AdminEndpointDecider setGuiContextRoot
+INFO: Admin Console Adapter: context root: /admin
+Feb 23, 2015 1:40:31 PM com.sun.enterprise.v3.admin.adapter.AdminEndpointDecider setGuiContextRoot
+INFO: Admin Console Adapter: context root: /admin
+Feb 23, 2015 1:40:31 PM com.sun.enterprise.v3.admin.adapter.AdminEndpointDecider setGuiContextRoot
+INFO: Admin Console Adapter: context root: /admin
+Feb 23, 2015 1:40:31 PM com.sun.enterprise.v3.server.AppServerStartup postStartupJob
+INFO: Undefined Product Name - define product and version info in config/branding  0.0.0  (0) startup time : Embedded (897ms), startup services(816ms), total(1,713ms)
+Feb 23, 2015 1:40:31 PM org.glassfish.admin.mbeanserver.JMXStartupService$JMXConnectorsStarterThread run
+INFO: JMXStartupService has disabled JMXConnector system
+Feb 23, 2015 1:40:31 PM com.sun.enterprise.connectors.jms.util.JmsRaUtil getInstalledMqVersion
+WARNING: jmsra.upgrade_check_failed
+]]></system-err>
   </testcase>
-  <testcase name="testGlassfishIconLinkMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.008"/>
-  <testcase name="testJenkinsNewJobMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.01"/>
-  <testcase name="testGlassfishPngMissingQuoteMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.01"/>
-  <testcase name="testJenkinsCssMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.012"/>
-  <testcase name="testJenkinsAllNewJobMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.009"/>
-  <testcase name="testGlassfishBaseCssTagMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.008"/>
-  <testcase name="testGlassfishBackgroundImageUrlMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.016"/>
-  <testcase name="testGlassfishSunScriptMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.023"/>
-  <testcase name="testGlassfishDojoBaseMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.009"/>
-  <testcase name="testGlassfishImageMastheadMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.005"/>
-  <testcase name="testGlassfishDojoMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.013"/>
-  <testcase name="testDoubleBackSlashMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.007"/>
-  <testcase name="testGlassfishFormPostRequestMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.019"/>
-  <testcase name="testGlassfishJavaxFacesMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.009"/>
-  <testcase name="testGlassfishYahooResourcesMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.005"/>
-  <testcase name="testJenkinsBaseMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.013"/>
-  <testcase name="testGlassfishImage11Matcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.01"/>
-  <testcase name="testGlassfishImperfectBackgroundImageUrlMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.009"/>
-  <testcase name="testJenkinsCookieMinMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.016"/>
-  <testcase name="testGlassfishFooterDivUrlMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.009"/>
-  <testcase name="testGlassfishFooterBackgroundImageMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.008"/>
-  <testcase name="testGlassfishResourceJSMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.013"/>
-  <testcase name="testJenkinsJobLinkMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.023"/>
-  <testcase name="testGlassfishJSecurityCheck" classname="org.geoint.keyhole.test.HttpGetTest" time="0.012"/>
-  <testcase name="testNothing" classname="org.geoint.keyhole.test.HttpGetTest" time="0.007"/>
-  <testcase name="testGlassfishBaseScriptTagMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.015"/>
-  <testcase name="testGlassfishActionTagMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.01"/>
-  <testcase name="testRegexGroups" classname="org.geoint.keyhole.test.HttpGetTest" time="0.015"/>
-  <testcase name="testGlassfishURLMissingQuoteMatcher" classname="org.geoint.keyhole.test.HttpGetTest" time="0.017"/>
-  <testcase name="testHtmlLinksRegex" classname="org.geoint.keyhole.test.HttpGetTest" time="0.013"/>
 </testsuite>

@@ -6,18 +6,16 @@ package org.geoint.keyhole.test;
  * and open the template in the editor.
  */
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import java.util.Base64;
-import java.util.Collections;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -49,15 +47,14 @@ public class AuthenticationServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
 
-        logger.log(Level.INFO, "* AuthenticationServlet initialized");
+        logger.log(Level.INFO, "***** AuthenticationServlet initialized");
 
     }
 
-    
     /**
-     * Handles the HTTP <code>GET</code> method.
-     * Returns basic http 200 'ok' response code
-     * 
+     * Handles the HTTP <code>GET</code> method. Returns basic http 200 'ok'
+     * response code
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -69,13 +66,17 @@ public class AuthenticationServlet extends HttpServlet {
             throws ServletException, IOException {
         logger.log(Level.INFO, "AuthenticationServlet#doGet() called");
         response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType(MediaType.TEXT_HTML);
+        try (PrintWriter writer = response.getWriter()) {
+            writer.println("acknowledged");
+            writer.flush();            
+        }
 
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.  
-     * Returns mock credentials in the response header that have been
-     * base64 encoded.  
+     * Handles the HTTP <code>POST</code> method. Returns mock credentials in
+     * the response header that have been base64 encoded.
      *
      * @param request servlet request
      * @param response servlet response
@@ -92,8 +93,14 @@ public class AuthenticationServlet extends HttpServlet {
         //set authorization header on the response
         String authVal = Base64.getEncoder()
                 .encodeToString(credentials.getBytes("utf-8"));
-        response.setHeader("Authorization", authVal);
-
+        response.addHeader("Authorization", authVal);
+//        response.setHeader("authorization", authVal);
+        response.setStatus(HttpServletResponse.SC_OK);
+        try (PrintWriter writer = response.getWriter()) {
+            writer.println("$$$$$$$$$$  --post successful--  $$$$$$$$$$$$$");
+            writer.flush();
+        }
+        
     }
 
     /**
