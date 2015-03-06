@@ -1,11 +1,8 @@
 package org.geoint.keyhole.test;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
@@ -13,7 +10,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.glassfish.embeddable.BootstrapProperties;
 import org.glassfish.embeddable.GlassFish;
 import org.glassfish.embeddable.GlassFishException;
 import org.glassfish.embeddable.GlassFishProperties;
@@ -82,23 +78,30 @@ public class AuthenticationTest {
             testAuthHeaderArchive.as(ZipExporter.class)
                     .exportTo(testAuthHeader, true);
 
-            //stand up embedded glassfish instance and deploy archives
-            BootstrapProperties bootstrapProperties = new BootstrapProperties();
+            //stand up embedded glassfish instance and deploy archives                                    
             GlassFishProperties glassfishProperties = new GlassFishProperties();
 
-            glassfishRuntime
-                    = GlassFishRuntime.bootstrap(bootstrapProperties);
+            //needed?
+            glassfishProperties.setProperty("com.sun.xml.ws.transport.http.client.HttpTransportPipe.dump", "true");
+            glassfishProperties.setProperty("com.sun.xml.internal.ws.transport.http.client.HttpTransportPipe.dump", "true");
+            glassfishProperties.setProperty("com.sun.xml.ws.transport.http.HttpAdapter.dump", "true");
+            glassfishProperties.setProperty("com.sun.xml.internal.ws.transport.http.HttpAdapter.dump", "true");
+
             glassfishProperties.setPort("https-listener", 8181);
             glassfishProperties.setPort("http-listener", 8080);
 
-            glassfish = glassfishRuntime.newGlassFish(glassfishProperties);
+            try {
+                glassfishRuntime = GlassFishRuntime.bootstrap();
+            } catch (GlassFishException e) {
+                logger.log(Level.WARNING, "glassfishRuntime already bootstrapped {0}", e);
+            }
+            if (glassfishRuntime != null) {
+                glassfish = glassfishRuntime.newGlassFish(glassfishProperties);
 
-            glassfish.start();
-            glassfish.getDeployer().deploy(keyhole, "--name=keyhole", "--contextroot=keyhole");
-            glassfish.getDeployer().deploy(testAuthHeader, "--name=test", "--contextroot=test");
-
-//            System.out.println("gf install root: " + bootstrapProperties.getInstallRoot());
-//            System.out.println("");
+                glassfish.start();
+                glassfish.getDeployer().deploy(keyhole, "--name=keyhole", "--contextroot=keyhole");
+                glassfish.getDeployer().deploy(testAuthHeader, "--name=test", "--contextroot=test");
+            }
         } catch (GlassFishException e) {
             logger.log(
                     Level.SEVERE, "unable to standup glassfish runtime {0}", e);
@@ -111,13 +114,17 @@ public class AuthenticationTest {
 
         try {
             //undeploy applications before shutting down
-            for (String app : glassfish
-                    .getDeployer().getDeployedApplications()) {
-                glassfish.getDeployer().undeploy(app);
-            }
+            if (glassfish != null) {
+                for (String app : glassfish
+                        .getDeployer().getDeployedApplications()) {
+                    glassfish.getDeployer().undeploy(app);
+                }
 
-            glassfish.stop();
-            glassfishRuntime.shutdown();
+                glassfish.stop();
+            }
+            if (glassfishRuntime != null) {
+                glassfishRuntime.shutdown();
+            }
 
         } catch (GlassFishException e) {
             logger.log(Level.SEVERE,
@@ -181,14 +188,17 @@ public class AuthenticationTest {
      *
      * @throws Exception
      */
-    @Test
     @Ignore
+    @Test
     public void testDirectPostOverHttps() throws Exception {
         URL url = new URL("https://localhost:8181/test/test");
 
         HttpURLConnection cnx = (HttpURLConnection) url.openConnection();
         cnx.setRequestMethod("POST");
+        cnx.addRequestProperty("jusername", "admin");
+        cnx.addRequestProperty("jpassword", "scarlet8");
         cnx.connect();
+
         logger.log(Level.INFO, "**********response code: {0}", cnx.getResponseCode());
         assertNotNull(cnx.getResponseMessage());
     }
@@ -274,11 +284,14 @@ public class AuthenticationTest {
      *
      * @throws Exception
      */
+    @Ignore
     @Test
     public void testProxiedHttpsPost() throws Exception {
         URL url = new URL("https://localhost:8181/keyhole/proxyHttpsTest/test");
         HttpURLConnection cnx = (HttpURLConnection) url.openConnection();
         cnx.setRequestMethod("POST");
+        cnx.addRequestProperty("j_username", "admin");
+        cnx.addRequestProperty("j_password", "scarlet8");
         cnx.connect();
         String line;
         System.out.println("&&&&&&&&&&&&&& response body  &&&&&&&&&&&&");

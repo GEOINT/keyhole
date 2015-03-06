@@ -17,10 +17,8 @@ package net.sf.j2ep;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +35,8 @@ import java.util.logging.Logger;
  * @author Anders Nyman
  */
 public class RewriteFilter implements Filter {
+
+    private FilterConfig filterConfig;
 
     /**
      * Logging element supplied by commons-logging.
@@ -61,24 +61,46 @@ public class RewriteFilter implements Filter {
      * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest,
      * javax.servlet.ServletResponse, javax.servlet.FilterChain)
      */
-    @Override    
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain filterChain) throws IOException, ServletException {
+        log("keyhole: RewriteFilter.doFilter() called  *******************");
         request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");           
+        response.setCharacterEncoding("UTF-8");
+
         
 
         if (response.isCommitted()) {
+            log("Not proxying, already committed.");
             logger.info("Not proxying, already committed.");
         } else if (!(request instanceof HttpServletRequest)) {
+            log("Request is not HttpRequest will only handle HttpRequests.");
             logger.info("Request is not HttpRequest, "
                     + "will only handle HttpRequests.");
         } else if (!(response instanceof HttpServletResponse)) {
+            log("Request is not HttpResponse will only handle HttpResponses.");
             logger.info("Request is not HttpResponse, "
                     + "will only handle HttpResponses.");
         } else {
+
+            log("****************************standard request/response submitted");
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             HttpServletRequest httpRequest = (HttpServletRequest) request;
+
+            //log request/response values
+            log("*******request*******");
+
+            ArrayList<String> headerNames
+                    = Collections.list(httpRequest.getHeaderNames());
+            for (String name : headerNames) {
+                log(name + " : " + httpRequest.getHeader(name));
+            }
+
+            log(" ********response********");
+
+            for (String name : httpResponse.getHeaderNames()) {
+                log(name + " : " + httpResponse.getHeader(name));
+            }
 
             //printing request/response headers to the console 
             //for debugging purposes
@@ -98,14 +120,16 @@ public class RewriteFilter implements Filter {
 //            });
 //            System.out.println("httpRequest.getContextPath(): {0}"
 //                    + httpRequest.getContextPath());
-
             //selecting the correct 'server' from the data.xml file
             Server server = serverChain.evaluate(httpRequest);
             if (server == null) {
+                log("Could not find a rule for this request "
+                        + "will not do anything.");
                 logger.info("Could not find a rule for this request, "
                         + "will not do anything.");
                 filterChain.doFilter(request, response);
             } else {
+                log("server != null *******************");
                 httpRequest.setAttribute("proxyServer", server);
 
                 //print request/response headers to find the field needed for 
@@ -121,7 +145,10 @@ public class RewriteFilter implements Filter {
                 wrappedResponse = new UrlRewritingResponseWrapper(httpResponse,
                         server, ownHostName, httpRequest.getContextPath(),
                         serverChain);
+                
+                
 
+                
                 filterChain.doFilter(httpRequest, wrappedResponse);
 
                 wrappedResponse.processStream();
@@ -138,11 +165,14 @@ public class RewriteFilter implements Filter {
      */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+
+        this.filterConfig = filterConfig;
+
         String data = filterConfig.getInitParameter("dataUrl");
         if (data == null) {
             throw new ServletException("dataUrl is required.");
         } else {
-            try {                
+            try {
                 File dataFile = new File(filterConfig.getServletContext().getRealPath(data));
                 ConfigParser parser = new ConfigParser(dataFile);
                 serverChain = parser.getServerChain();
@@ -161,6 +191,10 @@ public class RewriteFilter implements Filter {
     @Override
     public void destroy() {
         serverChain = null;
+    }
+
+    private void log(String msg) {
+        filterConfig.getServletContext().log("keyhole" + msg);
     }
 
 }

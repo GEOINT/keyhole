@@ -27,7 +27,7 @@ public class TerribleTrustManagerInstaller implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         logger.log(Level.WARNING, "This proxy currently disables ssl server"
                 + " valiation.  This will be fixed in a future version.");
-
+        
         SSLContext sc = null;
         try {
             //register global accept trust manager with the Java SSLContext
@@ -36,6 +36,7 @@ public class TerribleTrustManagerInstaller implements ServletContextListener {
                     new java.security.SecureRandom());
 
             //set this context as the JVM default SSL socket factory
+            
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
             //also register with Apach httpclient3, as it does not use the 
@@ -43,8 +44,8 @@ public class TerribleTrustManagerInstaller implements ServletContextListener {
             SslContextedSecureProtocolSocketFactory secureProtocolSocketFactory
                     = new SslContextedSecureProtocolSocketFactory(sc, false);
             Protocol.registerProtocol("https", new Protocol("https",
-                    (ProtocolSocketFactory) secureProtocolSocketFactory, 443));
-
+                    (ProtocolSocketFactory) secureProtocolSocketFactory, 8181));
+            
         } catch (NoSuchAlgorithmException | KeyManagementException e) {
             logger.log(Level.SEVERE, "Unable to register SSL work around, "
                     + "requsts to HTTPS servers with invalid certificates will "

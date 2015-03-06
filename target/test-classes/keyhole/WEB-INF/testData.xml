@@ -9,7 +9,7 @@
     scheme="https"
     domainName="127.0.0.1:8181/test"
     isRewriting="true">
-        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/proxyHttpsTest"/>
+        <rule className="net.sf.j2ep.rules.DirectoryRule" directory="/proxyHttpsTest/"/>
     </server>
     
     

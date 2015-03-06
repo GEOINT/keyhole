@@ -62,9 +62,6 @@ public class EntityEnclosingRequestHandler extends RequestHandlerBase {
         method.setRequestEntity(stream);
         method.setRequestHeader("Content-type", request.getContentType());
         
-        return method;
-        
-    }
-        
-
+        return method;        
+    }        
 }

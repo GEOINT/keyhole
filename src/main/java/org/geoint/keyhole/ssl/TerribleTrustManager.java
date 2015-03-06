@@ -21,6 +21,7 @@ public class TerribleTrustManager implements X509TrustManager {
     @Override
     public void checkClientTrusted(
             X509Certificate[] certs, String authType) {
+        System.out.println("------------ttr client cert authType: " + authType + "------------------");
         logger.log(Level.FINE, "The following client certs were approved by "
                 + "the TerribleTrustManager: {0}", certString(certs));
     }
@@ -28,6 +29,7 @@ public class TerribleTrustManager implements X509TrustManager {
     @Override
     public void checkServerTrusted(
             X509Certificate[] certs, String authType) {
+        System.out.println("------------ttr server cert authType: " + authType + "------------------");
         logger.log(Level.FINE, "The following server certs were approved by "
                 + "the TerribleTrustManager: {0}", certString(certs));
     }
@@ -36,9 +38,10 @@ public class TerribleTrustManager implements X509TrustManager {
         if (certs == null) {
             return "";
         }
+        
         StringBuilder certString = new StringBuilder();
         for (X509Certificate cert : certs) {
-            certString.append(cert.getSubjectDN().getName()).append(",");
+            certString.append(cert.getSubjectDN().getName()).append(",");            
         }
 //        return Arrays.stream(certs).map(
 //                (c) -> c.getSubjectDN().getName())

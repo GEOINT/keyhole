@@ -12,6 +12,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpMethodConstraint;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.ServletSecurity;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +25,14 @@ import javax.ws.rs.core.MediaType;
  *
  *
  */
+@WebServlet(name="AuthenticationServlet", urlPatterns = {""})
+@MultipartConfig
+@ServletSecurity(httpMethodConstraints={
+    @HttpMethodConstraint(value="GET"),
+    @HttpMethodConstraint(value="POST", 
+            transportGuarantee=ServletSecurity.TransportGuarantee.CONFIDENTIAL,
+            emptyRoleSemantic=ServletSecurity.EmptyRoleSemantic.PERMIT)
+})
 public class AuthenticationServlet extends HttpServlet {
 
     private static final Logger logger
@@ -68,7 +80,7 @@ public class AuthenticationServlet extends HttpServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType(MediaType.TEXT_HTML);
         try (PrintWriter writer = response.getWriter()) {
-            writer.println("acknowledged");
+            writer.println("&&&&&&&&&&&&&& GET request acknowledged  &&&&&&&&&&&&&&&&&&&&&");
             writer.flush();            
         }
 
@@ -88,18 +100,22 @@ public class AuthenticationServlet extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
         logger.log(Level.INFO, "AuthenticationServlet#doPost() called");
-        String credentials = "guest:guest123";
+//        String credentials = "guest:guest123";
 
-        //set authorization header on the response
-        String authVal = Base64.getEncoder()
-                .encodeToString(credentials.getBytes("utf-8"));
-        response.addHeader("Authorization", authVal);
-//        response.setHeader("authorization", authVal);
-        response.setStatus(HttpServletResponse.SC_OK);
+//        //set authorization header on the response
+//        String authVal = Base64.getEncoder()
+//                .encodeToString(credentials.getBytes("utf-8"));
+//        response.addHeader("Authorization", authVal);
+//        response.setStatus(HttpServletResponse.SC_OK);
         try (PrintWriter writer = response.getWriter()) {
-            writer.println("$$$$$$$$$$  --post successful--  $$$$$$$$$$$$$");
+            writer.println("$$$$$$$$$$  --POST successful--  $$$$$$$$$$$$$");
             writer.flush();
         }
+        
+        
+        
+        
+        
         
     }
 

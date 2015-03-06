@@ -96,6 +96,7 @@ public class ServerChain{
      * @see Rule#matches(HttpServletRequest)
      */
     public Server evaluate(HttpServletRequest request) {
+        System.out.println("serverchain#evaluate requestURI: " + request.getRequestURI());
         Iterator itr = getServerIterator();
         ServerContainer currentContainer = null;
         boolean currentMatches = false;

@@ -1,6 +1,7 @@
 net/sf/j2ep/test/CompositeRuleTest$3.class
 net/sf/j2ep/test/RewriteRuleTest$3.class
 net/sf/j2ep/test/CompositeRuleTest.class
+org/geoint/keyhole/test/AuthenticationFilter$MyHttpResponse.class
 net/sf/j2ep/test/RewriteRuleTest.class
 net/sf/j2ep/test/DirectoryRuleTest.class
 net/sf/j2ep/test/TimeRuleTest$6.class
@@ -33,3 +34,4 @@ net/sf/j2ep/test/IPRuleTest$1IPTest.class
 net/sf/j2ep/test/MockHttpServletRequest.class
 net/sf/j2ep/test/RewriteRuleTest$1.class
 net/sf/j2ep/test/DirectoryRuleTest$2.class
+org/geoint/keyhole/test/PostRequestClient.class

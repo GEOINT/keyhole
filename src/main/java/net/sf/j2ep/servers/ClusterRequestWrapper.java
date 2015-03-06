@@ -59,8 +59,9 @@ public class ClusterRequestWrapper extends HttpServletRequestWrapper {
      *
      * @param request The request we wrap.
      */
-    public ClusterRequestWrapper(HttpServletRequest request) {
+    public ClusterRequestWrapper(HttpServletRequest request) {        
         super(request);
+        request.getServletContext().log("---------ClusterRequestWrapper initialized----------");
         cookies = new Vector();
 
         Enumeration reqCookies = request.getHeaders("Cookie");

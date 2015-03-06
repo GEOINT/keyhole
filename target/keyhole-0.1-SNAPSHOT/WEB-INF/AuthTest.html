@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--  for use in testing form-based authentication over https-->
+<html>
+    <head>
+        <title>Mock Login Page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h3>mock login page:</h3>
+        <form method="POST" action="j_security_check">
+            <p>username:</p><br/>
+            <input type="text" name="j_username" ><br/>
+            <p>password:</p>
+            <input type="text" name="j_password"><br/><br/>            
+            <input type="submit" value="Login">
+            <input type="reset" value="Reset">
+        </form>
+
+
+    </body>
+</html>

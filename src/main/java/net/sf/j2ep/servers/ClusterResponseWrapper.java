@@ -56,6 +56,7 @@ public class ClusterResponseWrapper extends HttpServletResponseWrapper {
      */
     public ClusterResponseWrapper(HttpServletResponse response, String serverId) {
         super(response);
+        logger.log(Level.INFO, "---------ClusterResponseWrapper initialized--------------");
         this.serverId = "." + serverId;
     }
 
@@ -91,6 +92,10 @@ public class ClusterResponseWrapper extends HttpServletResponseWrapper {
     @Override
     public void setHeader(String name, String originalValue) {
         String value;
+        logger.log(
+                Level.INFO, "ClusterResponseWrapper#setHeader "
+                        + "name: {0} : originalValue: {1}", 
+                new Object[]{name, originalValue});
         if (name.equalsIgnoreCase("set-cookie")) {
             value = rewriteSetCookie(originalValue);
         } else {
@@ -109,7 +114,7 @@ public class ClusterResponseWrapper extends HttpServletResponseWrapper {
         Matcher matcher = sessionPattern.matcher(value);
         String rewritten = matcher.replaceAll("$1$2" + serverId);
         if (logger.isLoggable(Level.FINEST) && !rewritten.equals(value)) {
-            logger.log(Level.FINEST, "Session found and rewritten \"{0}\" >> {1}",
+            logger.log(Level.INFO, "Session found and rewritten \"{0}\" >> {1}",
                     new Object[]{value, rewritten});
         }
         return rewritten;

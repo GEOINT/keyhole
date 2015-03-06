@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.geoint.keyhole.test.AuthenticationTest" time="0.493" tests="9" errors="0" skipped="8" failures="0">
+<testsuite name="org.geoint.keyhole.test.AuthenticationTest" time="0" tests="9" errors="0" skipped="9" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/jdk1.8.0_11/jre/lib/amd64"/>
@@ -13,10 +13,10 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="unknown"/>
-    <property name="test" value="org.geoint.keyhole.test.AuthenticationTest"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="user.dir" value="/home/localman/workspace/github/keyhole"/>
     <property name="java.runtime.version" value="1.8.0_11-b12"/>
+    <property name="netbeans.deploy" value="true"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="/usr/lib/jvm/jdk1.8.0_11/jre/lib/endorsed"/>
     <property name="os.arch" value="amd64"/>
@@ -42,7 +42,7 @@
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/usr/lib/jvm/jdk1.8.0_11/jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=org.geoint.keyhole.test.AuthenticationTest -Dmaven.ext.class.path=/devSpace/tools/netbeans-8.0/java/maven-nblib/netbeans-eventspy.jar surefire:test"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dnetbeans.deploy=true -Dmaven.ext.class.path=/devSpace/tools/netbeans-8.0/java/maven-nblib/netbeans-eventspy.jar package"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -62,74 +62,283 @@
   </properties>
   <testcase name="testNothingBase" classname="org.geoint.keyhole.test.AuthenticationTest" time="0">
     <skipped/>
-    <system-out><![CDATA[Found populator: org.glassfish.kernel.embedded.EmbeddedDomainXml
+    <system-out><![CDATA[
+
+ rewrites summary:
+
+
+group0
+
+
+glassfishPngMissingQuoteMatcher0 : url(/resource/community-theme/images/login-backimage-open.png
+glassfishBackgroundImageUrlMatcher0 : url(/resource/community-theme/images/login-backimage-open.png
+glassfishBaseCssTagMatcher0 : href="/theme/com/sun/webui/jsf/suntheme/css/css_master.css"
+glassfishImperfectBackgroundImageUrlMatcher0 : url('/theme/com/sun/webui/jsf/suntheme/images/login/gradlogtop.jpg'
+glassfishUrlMissingQuoteMatcher0 : url(/theme/com/sun/webui/jsf/suntheme/images/login/gradlogbot.jpg
+glassfishFooterBackgroundImageMatcher0 : url(/theme/com/sun/webui/jsf/suntheme/images/login/gradlogbot.jpg
+glassfishFooterDivUrlMatcher0 : url(/theme/com/sun/webui/jsf/suntheme/images/login/gradlogbot.jpg
+glassfishJavaxFacesMatcher0 : src="/javax.faces.resource/jsf.js.jsf?ln=javax.faces"
+jenkinsBaseMatcher0 : href='/jenkins/static/4fe0e213/css/style.css'
+glassfishSunScriptMatcher0 : src="/resource/common/js/adminjsf.js"
+glassfishJSecurityCheckMatcher0 : action="j_security_check"
+glassfishDojoBaseMatcher0 : src="/keyhole/gf/theme/META-INF/dojo/dojo.js"
+glassfishDojoMatcher0 : src='"
+jenkinsJobBuildLinkMatcher0 : href="job/apacheds-war/lastBuild"
+glassfishBaseScriptTagMatcher0 : src="/theme/META-INF/dojo/dojo.js"
+glassfishImage11Matcher0 : src="/resource/community-theme/images/login-product_name_open.png"
+jenkinsCookieMinMatcher0 : src="/jenkins/static/e04b8d8c/scripts/yui/cookie/cookie-min.js"
+jenkinsNewJobMatcher 0 : href="/jenkins/view/All/newJob"
+glassfishActionTagMatcher0 : action="j_security_check"
+glassfishResourceJSMatcher0 : src="/resource/js/cj.js"
+jenkinsJobWarLinkMatcher0 : href="job/apacheds-war/"
+yahooResourceMatcher0 : src="/resources/yui/yahoo-dom-event.js"
+jenkinsAllNewJobMatcher0 : href="/jenkins/view/All/newJob"
+jenkinsJobLinkMatcher0 : href="job/apacheds-war/lastSuccessfulBuild/"
+jenkinsCssMatcher0 : href="/jenkins/static/e04b8d8c/css/style.css"
+glassfishIconLinkMatcher0 : href="/resource/community-theme/images/favicon.ico"
+glassfishImageTagMatcher0 : src="/resource/community-theme/images/login-product_name_open.png"
+
+
+
+
+
+group1
+
+
+glassfishPngMissingQuoteMatcher1 : url(
+glassfishBackgroundImageUrlMatcher1 : url(
+glassfishBaseCssTagMatcher1 : href=
+glassfishImperfectBackgroundImageUrlMatcher1 : url(
+glassfishFooterBackgroundImageMatcher1 : url(
+glassfishFooterDivUrlMatcher1 : url(
+glassfishJavaxFacesMatcher1 : src=
+jenkinsBaseMatcher1 : href=
+glassfishSunScriptMatcher1 : src=
+glassfishUrlMissingQuoteMatcher1 : url(
+glassfishJSecurityCheckMatcher1 : action=
+glassfishDojoBaseMatcher1 : src=
+glassfishDojoMatcher1 : src=
+doubleBackSlashMatcher{0}: {1}1 : //typeface.nytimes.com/zam5nzz.js
+glassfishBaseScriptTagMatcher1 : src=
+glassfishImage11Matcher1 : src=
+jenkinsCookieMinMatcher1 : src=
+jenkinsNewJobMatcher 1 : href=
+glassfishActionTagMatcher1 : action=
+glassfishResourceJSMatcher1 : src=
+jenkinsJobBuildLinkMatcher1 : href=
+glassfishImageMastheadMatcher{0}: {1}1 : /theme/com/sun/webui/jsf/suntheme/images/other/dot.gif
+yahooResourceMatcher1 : src=
+jenkinsJobWarLinkMatcher1 : href=
+jenkinsAllNewJobMatcher1 : href=
+jenkinsCssMatcher1 : href=
+glassfishIconLinkMatcher1 : href=
+glassfishImageTagMatcher1 : src=
+jenkinsJobLinkMatcher1 : href=
+
+
+
+
+
+group2
+
+
+glassfishPngMissingQuoteMatcher2 : 
+glassfishBackgroundImageUrlMatcher2 : 
+glassfishBaseCssTagMatcher2 : "
+glassfishImperfectBackgroundImageUrlMatcher2 : '
+glassfishJavaxFacesMatcher2 : "
+glassfishFooterBackgroundImageMatcher2 : 
+glassfishFooterDivUrlMatcher2 : 
+jenkinsBaseMatcher2 : '
+glassfishSunScriptMatcher2 : "
+glassfishUrlMissingQuoteMatcher2 : 
+glassfishDojoMatcher2 : '
+glassfishJSecurityCheckMatcher2 : "
+glassfishDojoBaseMatcher2 : "
+glassfishBaseScriptTagMatcher2 : "
+glassfishImage11Matcher2 : "
+jenkinsCookieMinMatcher2 : "
+jenkinsNewJobMatcher 2 : "
+glassfishActionTagMatcher2 : "
+glassfishResourceJSMatcher2 : "
+jenkinsJobBuildLinkMatcher2 : "
+jenkinsJobWarLinkMatcher2 : "
+yahooResourceMatcher2 : "
+jenkinsCssMatcher2 : "
+jenkinsAllNewJobMatcher2 : "
+glassfishIconLinkMatcher2 : "
+glassfishImageTagMatcher2 : "
+jenkinsJobLinkMatcher2 : "
+
+
+
+
+
+group3
+
+
+glassfishPngMissingQuoteMatcher3 : null
+glassfishBaseCssTagMatcher3 : null
+glassfishBackgroundImageUrlMatcher3 : null
+glassfishJavaxFacesMatcher3 : null
+glassfishImperfectBackgroundImageUrlMatcher3 : null
+glassfishFooterBackgroundImageMatcher3 : null
+glassfishFooterDivUrlMatcher3 : null
+glassfishSunScriptMatcher3 : null
+glassfishUrlMissingQuoteMatcher3 : null
+jenkinsBaseMatcher3 : null
+glassfishDojoMatcher3 : null
+glassfishJSecurityCheckMatcher3 : null
+glassfishDojoBaseMatcher3 : null
+glassfishImage11Matcher3 : null
+glassfishBaseScriptTagMatcher3 : null
+jenkinsCookieMinMatcher3 : null
+jenkinsNewJobMatcher 3 : null
+glassfishActionTagMatcher3 : null
+glassfishResourceJSMatcher3 : null
+jenkinsJobBuildLinkMatcher3 : null
+yahooResourceMatcher3 : null
+jenkinsJobWarLinkMatcher3 : null
+jenkinsCssMatcher3 : null
+jenkinsAllNewJobMatcher3 : null
+glassfishIconLinkMatcher3 : null
+jenkinsJobLinkMatcher3 : null
+glassfishImageTagMatcher3 : null
+
+
+
+
+
+group4
+
+
+glassfishPngMissingQuoteMatcher4 : null
+glassfishFooterBackgroundImageMatcher4 : null
+glassfishBaseCssTagMatcher4 : null
+glassfishJavaxFacesMatcher4 : null
+glassfishImperfectBackgroundImageUrlMatcher4 : null
+glassfishBackgroundImageUrlMatcher4 : null
+glassfishFooterDivUrlMatcher4 : null
+glassfishSunScriptMatcher4 : null
+glassfishUrlMissingQuoteMatcher4 : null
+jenkinsBaseMatcher4 : null
+glassfishDojoMatcher4 : null
+glassfishJSecurityCheckMatcher4 : null
+glassfishDojoBaseMatcher4 : null
+glassfishImage11Matcher4 : null
+glassfishBaseScriptTagMatcher4 : null
+jenkinsCookieMinMatcher4 : null
+jenkinsNewJobMatcher 4 : null
+glassfishActionTagMatcher4 : null
+glassfishResourceJSMatcher4 : null
+yahooResourceMatcher4 : null
+jenkinsJobBuildLinkMatcher4 : null
+jenkinsJobWarLinkMatcher4 : null
+jenkinsAllNewJobMatcher4 : null
+jenkinsCssMatcher4 : null
+glassfishIconLinkMatcher4 : null
+jenkinsJobLinkMatcher4 : null
+glassfishImageTagMatcher4 : null
+
+
+
+
+
+group5
+
+
+glassfishPngMissingQuoteMatcher5 : null
+glassfishFooterBackgroundImageMatcher5 : null
+glassfishBaseCssTagMatcher5 : null
+glassfishImperfectBackgroundImageUrlMatcher5 : null
+glassfishJavaxFacesMatcher5 : null
+glassfishBackgroundImageUrlMatcher5 : null
+glassfishFooterDivUrlMatcher5 : null
+glassfishSunScriptMatcher5 : null
+glassfishUrlMissingQuoteMatcher5 : null
+jenkinsBaseMatcher5 : null
+glassfishDojoBaseMatcher5 : null
+glassfishDojoMatcher5 : null
+glassfishJSecurityCheckMatcher5 : null
+glassfishImage11Matcher5 : null
+glassfishBaseScriptTagMatcher5 : null
+jenkinsCookieMinMatcher5 : null
+jenkinsNewJobMatcher 5 : null
+glassfishActionTagMatcher5 : null
+yahooResourceMatcher5 : null
+glassfishResourceJSMatcher5 : null
+jenkinsJobBuildLinkMatcher5 : null
+jenkinsJobWarLinkMatcher5 : null
+jenkinsAllNewJobMatcher5 : null
+jenkinsCssMatcher5 : null
+glassfishIconLinkMatcher5 : null
+glassfishImageTagMatcher5 : null
+jenkinsJobLinkMatcher5 : null
+
+
+
+
+
+group6
+
+
+glassfishPngMissingQuoteMatcher6 : /resource/community-theme/images/login-backimage-open.png
+glassfishFooterBackgroundImageMatcher6 : /theme/com/sun/webui/jsf/suntheme/images/login/gradlogbot.jpg
+glassfishBaseCssTagMatcher6 : /theme/com/sun/webui/jsf/suntheme/css/css_master.css
+glassfishJavaxFacesMatcher6 : /javax.faces.resource/jsf.js.jsf?ln=javax.faces
+glassfishImperfectBackgroundImageUrlMatcher6 : /theme/com/sun/webui/jsf/suntheme/images/login/gradlogtop.jpg
+glassfishBackgroundImageUrlMatcher6 : /resource/community-theme/images/login-backimage-open.png
+glassfishFooterDivUrlMatcher6 : /theme/com/sun/webui/jsf/suntheme/images/login/gradlogbot.jpg
+glassfishSunScriptMatcher6 : /resource/common/js/adminjsf.js
+glassfishUrlMissingQuoteMatcher6 : /theme/com/sun/webui/jsf/suntheme/images/login/gradlogbot.jpg
+jenkinsBaseMatcher6 : /jenkins/static/4fe0e213/css/style.css
+glassfishDojoBaseMatcher6 : /keyhole/gf/theme/META-INF/dojo/dojo.js
+glassfishDojoMatcher6 : 
+glassfishJSecurityCheckMatcher6 : j_security_check
+glassfishImage11Matcher6 : /resource/community-theme/images/login-product_name_open.png
+glassfishBaseScriptTagMatcher6 : /theme/META-INF/dojo/dojo.js
+jenkinsCookieMinMatcher6 : /jenkins/static/e04b8d8c/scripts/yui/cookie/cookie-min.js
+jenkinsNewJobMatcher 6 : /jenkins/view/All/newJob
+glassfishActionTagMatcher6 : j_security_check
+glassfishResourceJSMatcher6 : /resource/js/cj.js
+yahooResourceMatcher6 : /resources/yui/yahoo-dom-event.js
+jenkinsJobBuildLinkMatcher6 : job/apacheds-war/lastBuild
+jenkinsJobWarLinkMatcher6 : job/apacheds-war/
+jenkinsAllNewJobMatcher6 : /jenkins/view/All/newJob
+jenkinsCssMatcher6 : /jenkins/static/e04b8d8c/css/style.css
+glassfishIconLinkMatcher6 : /resource/community-theme/images/favicon.ico
+glassfishImageTagMatcher6 : /resource/community-theme/images/login-product_name_open.png
+jenkinsJobLinkMatcher6 : job/apacheds-war/lastSuccessfulBuild/
+
+
+
+
+PlainTextActionReporterSUCCESSNo monitoring data to report.
 ]]></system-out>
-    <system-err><![CDATA[Feb 23, 2015 4:15:34 PM org.glassfish.security.services.impl.authorization.AuthorizationServiceImpl initialize
-INFO: Authorization Service has successfully initialized.
-Feb 23, 2015 4:15:34 PM org.hibernate.validator.internal.util.Version <clinit>
-INFO: HV000001: Hibernate Validator 5.0.0.Final
-Feb 23, 2015 4:15:35 PM com.sun.enterprise.v3.services.impl.GrizzlyProxy start0
-INFO: Grizzly Framework 2.3.15 started in: 20ms - bound to [/0.0.0.0:8080]
-Feb 23, 2015 4:15:35 PM com.sun.enterprise.v3.services.impl.GrizzlyProxy start0
-INFO: Grizzly Framework 2.3.15 started in: 1ms - bound to [/0.0.0.0:8181]
-Feb 23, 2015 4:15:35 PM com.sun.enterprise.v3.admin.adapter.AdminEndpointDecider setGuiContextRoot
-INFO: Admin Console Adapter: context root: /admin
-Feb 23, 2015 4:15:35 PM com.sun.enterprise.v3.admin.adapter.AdminEndpointDecider setGuiContextRoot
-INFO: Admin Console Adapter: context root: /admin
-Feb 23, 2015 4:15:35 PM com.sun.enterprise.v3.admin.adapter.AdminEndpointDecider setGuiContextRoot
-INFO: Admin Console Adapter: context root: /admin
-Feb 23, 2015 4:15:35 PM com.sun.enterprise.v3.server.AppServerStartup postStartupJob
-INFO: Undefined Product Name - define product and version info in config/branding  0.0.0  (0) startup time : Embedded (978ms), startup services(822ms), total(1,800ms)
-Feb 23, 2015 4:15:36 PM org.glassfish.admin.mbeanserver.JMXStartupService$JMXConnectorsStarterThread run
-INFO: JMXStartupService has disabled JMXConnector system
-Feb 23, 2015 4:15:36 PM com.sun.enterprise.connectors.jms.util.JmsRaUtil getInstalledMqVersion
-WARNING: jmsra.upgrade_check_failed
-Feb 23, 2015 4:15:36 PM com.sun.enterprise.security.SecurityLifecycle <init>
-INFO: Java security manager is disabled.
-Feb 23, 2015 4:15:36 PM com.sun.enterprise.security.SecurityLifecycle onInitialization
-INFO: Entering Security Startup Service.
-Feb 23, 2015 4:15:36 PM com.sun.enterprise.security.PolicyLoader loadPolicy
-INFO: Loading policy provider com.sun.enterprise.security.jacc.provider.SimplePolicyProvider.
-Feb 23, 2015 4:15:36 PM com.sun.enterprise.security.auth.realm.Realm doInstantiate
-INFO: Realm [admin-realm] of classtype [com.sun.enterprise.security.auth.realm.file.FileRealm] successfully created.
-Feb 23, 2015 4:15:36 PM com.sun.enterprise.security.auth.realm.Realm doInstantiate
-INFO: Realm [file] of classtype [com.sun.enterprise.security.auth.realm.file.FileRealm] successfully created.
-Feb 23, 2015 4:15:36 PM com.sun.enterprise.security.auth.realm.Realm doInstantiate
-INFO: Realm [certificate] of classtype [com.sun.enterprise.security.auth.realm.certificate.CertificateRealm] successfully created.
-Feb 23, 2015 4:15:36 PM com.sun.enterprise.security.SecurityLifecycle onInitialization
-INFO: Security Service(s) started successfully.
-Feb 23, 2015 4:15:36 PM com.sun.enterprise.web.WebContainer createHttpListener
-INFO: Created HTTP listener http-listener on host/port 0.0.0.0:8080
-Feb 23, 2015 4:15:36 PM com.sun.enterprise.web.WebContainer createHttpListener
-INFO: Created HTTP listener https-listener on host/port 0.0.0.0:8181
-Feb 23, 2015 4:15:36 PM com.sun.enterprise.web.WebContainer createHosts
-INFO: Created virtual server server
-Feb 23, 2015 4:15:37 PM org.apache.catalina.realm.JAASRealm setContainer
-INFO: Setting JAAS app name glassfish-web
-Feb 23, 2015 4:15:37 PM com.sun.enterprise.web.WebContainer loadSystemDefaultWebModules
-INFO: Virtual server server loaded default web module 
-Feb 23, 2015 4:15:37 PM org.apache.catalina.core.StandardContext log
-INFO: WebModule[null] ServletContext.log():No Spring WebApplicationInitializer types detected on classpath
-Feb 23, 2015 4:15:37 PM org.apache.catalina.core.StandardContext log
-INFO: WebModule[null] ServletContext.log():No Spring WebApplicationInitializer types detected on classpath
-Feb 23, 2015 4:15:37 PM org.geoint.keyhole.ssl.TerribleTrustManagerInstaller contextInitialized
-WARNING: This proxy currently disables ssl server valiation.  This will be fixed in a future version.
-Feb 23, 2015 4:15:37 PM net.sf.j2ep.ProxyFilter init
-INFO: init proxy filter
-Feb 23, 2015 4:15:37 PM org.geoint.keyhole.test.AuthenticationFilter init
-INFO: AuthenticationFilter initialized
-Feb 23, 2015 4:15:37 PM com.sun.enterprise.web.WebApplication start
-INFO: Loading application [keyhole] at [/keyhole]
-Feb 23, 2015 4:15:37 PM org.glassfish.deployment.admin.DeployCommand execute
-INFO: keyhole was successfully deployed in 1,620 milliseconds.
-Feb 23, 2015 4:15:37 PM org.apache.catalina.core.StandardContext log
-INFO: WebModule[null] ServletContext.log():No Spring WebApplicationInitializer types detected on classpath
-Feb 23, 2015 4:15:37 PM org.geoint.keyhole.test.AuthenticationFilter init
-INFO: AuthenticationFilter initialized
-Feb 23, 2015 4:15:37 PM com.sun.enterprise.web.WebApplication start
-INFO: Loading application [test] at [/test]
-Feb 23, 2015 4:15:37 PM org.glassfish.deployment.admin.DeployCommand execute
-INFO: test was successfully deployed in 177 milliseconds.
+    <system-err><![CDATA[Mar 04, 2015 1:00:28 PM org.geoint.keyhole.test.AuthenticationTest startUp
+WARNING: glassfishRuntime already bootstrapped {0}
+org.glassfish.embeddable.GlassFishException: Already bootstrapped
+	at org.glassfish.embeddable.GlassFishRuntime._bootstrap(GlassFishRuntime.java:154)
+	at org.glassfish.embeddable.GlassFishRuntime.bootstrap(GlassFishRuntime.java:110)
+	at org.glassfish.embeddable.GlassFishRuntime.bootstrap(GlassFishRuntime.java:84)
+	at org.geoint.keyhole.test.AuthenticationTest.startUp(AuthenticationTest.java:94)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:264)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:153)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:124)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:200)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
+
 ]]></system-err>
   </testcase>
   <testcase name="testDirectGetOverHttps" classname="org.geoint.keyhole.test.AuthenticationTest" time="0">
@@ -141,7 +350,9 @@ INFO: test was successfully deployed in 177 milliseconds.
   <testcase name="testDirectGet" classname="org.geoint.keyhole.test.AuthenticationTest" time="0">
     <skipped/>
   </testcase>
-  <testcase name="testProxiedHttpsPost" classname="org.geoint.keyhole.test.AuthenticationTest" time="0.493"/>
+  <testcase name="testProxiedHttpsPost" classname="org.geoint.keyhole.test.AuthenticationTest" time="0">
+    <skipped/>
+  </testcase>
   <testcase name="testProxiedPost" classname="org.geoint.keyhole.test.AuthenticationTest" time="0">
     <skipped/>
   </testcase>

@@ -17,5 +17,6 @@
 /home/localman/workspace/github/keyhole/src/test/java/net/sf/j2ep/test/DirectoryMappingTest.java
 /home/localman/workspace/github/keyhole/src/test/java/net/sf/j2ep/test/DirectoryRuleTest.java
 /home/localman/workspace/github/keyhole/src/test/java/net/sf/j2ep/test/CompositeRuleTest.java
+/home/localman/workspace/github/keyhole/src/test/java/org/geoint/keyhole/test/PostRequestClient.java
 /home/localman/workspace/github/keyhole/src/test/java/net/sf/j2ep/test/StatusCheckerTest.java
 /home/localman/workspace/github/keyhole/src/test/java/net/sf/j2ep/test/ClusterTest.java

@@ -1,8 +1,6 @@
 package org.geoint.keyhole.test;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.Instant;
@@ -46,11 +44,17 @@ public class AuthenticationFilter implements Filter {
             Instant time = Instant.now();
 
             logFileName = filterConfig.getInitParameter("logFile");
-            File logFile
-                    = new File(
-                            System.getProperty("java.io.tmpdir"), logFileName + time + ".log");
-            out = new PrintWriter(new FileOutputStream(logFile, true));
-        } catch (FileNotFoundException ex) {
+            File logFile = new File(System.getProperty("java.io.tmpdir"),
+                    logFileName + time + ".log");
+
+            //out = new PrintWriter(new FileOutputStream(logFile, true));
+            
+            
+            
+            //send output to the console
+            out = new PrintWriter(System.out);
+
+        } catch (Exception ex) {
             logger.log(Level.SEVERE, "Cannot create authfilter log", ex);
         }
     }
@@ -110,12 +114,17 @@ public class AuthenticationFilter implements Filter {
     }
 
     private void printHeader(String name, String value) {
-        out.println(name + " : " + value + "\n");
+        if (out != null) {
+            out.println(name + " : " + value + "\n");
+        } else {
+            System.out.println(name + " : " + value);
+        }
+
     }
 
     private class MyHttpResponse implements HttpServletResponse {
 
-        private HttpServletResponse delegate;
+        private final HttpServletResponse delegate;
 
         public MyHttpResponse(HttpServletResponse delegate) {
             this.delegate = delegate;

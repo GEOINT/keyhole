@@ -15,6 +15,8 @@
  */
 package net.sf.j2ep.servers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,6 +36,8 @@ import net.sf.j2ep.model.Server;
  * @author Anders Nyman
  */
 public class BaseServer extends ServerContainerBase implements Server {
+
+    private static final Logger logger = Logger.getLogger(BaseServer.class.getName());
 
     /**
      * Marks if this rule server will do any rewriting of links.
@@ -59,6 +63,7 @@ public class BaseServer extends ServerContainerBase implements Server {
      * Basic constructor that will initialize the directory to "".
      */
     public BaseServer() {
+        logger.log(Level.SEVERE, "-----------------------base server reinitialized --------------");
         path = "";
         isRewriting = false;
     }
@@ -174,9 +179,7 @@ public class BaseServer extends ServerContainerBase implements Server {
      * @param path The path
      */
     public void setPath(String path) {
-        if (path == null) {
-            path = "";
-        } else {
+        if (path != null) {
             this.path = path;
         }
     }
@@ -187,5 +190,6 @@ public class BaseServer extends ServerContainerBase implements Server {
      */
     @Override
     public void setConnectionExceptionRecieved(Exception e) {
+        logger.log(Level.SEVERE, "BaseServer#setConnectionExceptionReceived {0}", e);
     }
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    
+    <!-- keyhole web.xml  -->
+    <display-name>keyhole</display-name>
+    <listener>
+        <description>SSL trust manager overridding</description>
+        <listener-class>org.geoint.keyhole.ssl.TerribleTrustManagerInstaller</listener-class>
+    </listener>               
+  
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>org.geoint.keyhole.test.AuthenticationFilter</filter-class>        
+        <init-param>
+            <param-name>logFile</param-name>
+            <param-value>keyholeLog</param-value>
+        </init-param>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/*</url-pattern>       
+    </filter-mapping>
+    
+    
+    <filter>
+        <filter-name>Rewriter</filter-name>
+        <filter-class>net.sf.j2ep.RewriteFilter</filter-class>
+        <init-param>
+            <param-name>dataUrl</param-name>
+            <param-value>testData.xml</param-value>
+        </init-param>
+    </filter>   
+    <filter-mapping>
+        <filter-name>Rewriter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <filter>
+        <filter-name>Proxy</filter-name>
+        <filter-class>net.sf.j2ep.ProxyFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Proxy</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>       
+    
+</web-app>

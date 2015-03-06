@@ -26,5 +26,26 @@
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/*</url-pattern>       
     </filter-mapping>    
-        
+    
+    <security-constraint>
+        <display-name>SecurityConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>WRCollection</web-resource-name>
+            <url-pattern>/test</url-pattern>
+        </web-resource-collection>        
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <login-config>                
+        <auth-method>BASIC</auth-method>
+        <realm-name>file</realm-name>    
+        <form-login-config>
+            <form-login-page>/AuthTest.html</form-login-page>
+            <form-error-page>/AuthError.html</form-error-page>
+        </form-login-config>                   
+    </login-config>
+    <security-role>
+        <role-name>admins</role-name>
+    </security-role>        
 </web-app>
