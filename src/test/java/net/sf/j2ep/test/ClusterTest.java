@@ -1,27 +1,29 @@
-package net.sf.j2ep.test;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.servlet.ServletException;
-import static junit.framework.Assert.assertEquals;
-
-import net.sf.j2ep.ProxyFilter;
-import static org.junit.Assert.assertTrue;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.springframework.mock.web.MockFilterChain;
-import org.springframework.mock.web.MockFilterConfig;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-public class ClusterTest {  // extends FilterTestCase {
+//package net.sf.j2ep.test;
+//
+//import java.io.IOException;
+//import java.net.HttpURLConnection;
+//import java.net.URI;
+//import java.net.URISyntaxException;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
+//
+//import javax.servlet.ServletException;
+//import static junit.framework.Assert.assertEquals;
+//
+//import net.sf.j2ep.ProxyFilter;
+//import static org.junit.Assert.assertTrue;
+//import org.junit.BeforeClass;
+//import org.junit.Ignore;
+//import org.junit.Test;
+//import org.springframework.mock.web.MockFilterChain;
+//import org.springframework.mock.web.MockFilterConfig;
+//import org.springframework.mock.web.MockHttpServletResponse;
+//import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+//import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
+//import org.springframework.web.context.request.WebRequest;
+//
+//public class ClusterTest {  // extends FilterTestCase {
 //
 //    private ProxyFilter proxyFilter;
 //    private static final Logger logger = Logger.getLogger(ClusterTest.class.getName());
@@ -41,7 +43,7 @@ public class ClusterTest {  // extends FilterTestCase {
 //        }
 //
 //    }
-
+//
 //    @Ignore
 //    @Test
 //    public void testServer() {
@@ -63,7 +65,7 @@ public class ClusterTest {  // extends FilterTestCase {
 //        }
 //        assertTrue(true);
 //    }
-
+//
 //    public void beginSecondServer(WebRequest theRequest) {
 //        theRequest.setURL("localhost:8080", "/test", "/testCluster/serverId.jsp", null, null);
 //        theRequest.addHeader("Cookie", "JSESSIONID=somesessionid.server1");
@@ -118,4 +120,4 @@ public class ClusterTest {  // extends FilterTestCase {
 //        assertTrue("Checking that the cluster did send the response to some server anyways", id == 0 || id == 1);
 //        assertTrue("Checking that we now have a new server", session.endsWith(".server" + id));
 //    }
-}
+//}

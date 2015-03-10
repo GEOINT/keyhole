@@ -62,6 +62,8 @@ public class AuthenticationTest {
                     .addAsWebInfResource(
                             new File("src/test/resources/keyhole/WEB-INF/web.xml"));
 
+            
+
             File keyhole = new File(
                     System.getProperty("glassfish.embedded.tmpdir", "keyhole.war"));
             keyholeArchive.as(ZipExporter.class).exportTo(keyhole, true);
@@ -136,7 +138,6 @@ public class AuthenticationTest {
      * get the horse out of the gate
      */
     @Test
-    @Ignore
     public void testNothingBase() {
         assertTrue(true);
     }
@@ -147,16 +148,13 @@ public class AuthenticationTest {
      * @throws Exception
      */
     @Test
-    @Ignore
     public void testDirectGet() throws Exception {
         URL url = new URL("http://localhost:8080/test/test");
 
         HttpURLConnection cnx = (HttpURLConnection) url.openConnection();
         cnx.setRequestMethod("GET");
         cnx.connect();
-
         String responseMessage = cnx.getResponseMessage();
-
         BufferedReader responseBody = new BufferedReader(new InputStreamReader(cnx.getInputStream()));
         String line;
         System.out.println("&&&&&&&&&&&&&& response body  &&&&&&&&&&&&");
@@ -173,7 +171,6 @@ public class AuthenticationTest {
      * @throws Exception
      */
     @Test
-    @Ignore
     public void testDirectPost() throws Exception {
         URL url = new URL("http://localhost:8080/test/test");
 
@@ -188,7 +185,6 @@ public class AuthenticationTest {
      *
      * @throws Exception
      */
-    @Ignore
     @Test
     public void testDirectPostOverHttps() throws Exception {
         URL url = new URL("https://localhost:8181/test/test");
@@ -208,7 +204,6 @@ public class AuthenticationTest {
      * @throws Exception
      */
     @Test
-    @Ignore
     public void testDirectGetOverHttps() throws Exception {
         URL url = new URL("https://localhost:8181/test/test");
 
@@ -226,7 +221,6 @@ public class AuthenticationTest {
      * @throws Exception
      */
     @Test
-    @Ignore
     public void testProxiedGet() throws Exception {
         URL url = new URL("http://localhost:8080/keyhole/proxyTest");
 
@@ -244,7 +238,6 @@ public class AuthenticationTest {
      * @throws Exception
      */
     @Test
-    @Ignore
     public void testProxiedPost() throws Exception {
 
         URL url = new URL("http://localhost:8080/keyhole/proxyTest");
@@ -261,7 +254,6 @@ public class AuthenticationTest {
      * @throws Exception
      */
     @Test
-    @Ignore
     public void testProxiedHttpsGet() throws Exception {
         URL url = new URL("https://localhost:8181/keyhole/proxyHttpsTest/test");
 
@@ -284,7 +276,6 @@ public class AuthenticationTest {
      *
      * @throws Exception
      */
-    @Ignore
     @Test
     public void testProxiedHttpsPost() throws Exception {
         URL url = new URL("https://localhost:8181/keyhole/proxyHttpsTest/test");

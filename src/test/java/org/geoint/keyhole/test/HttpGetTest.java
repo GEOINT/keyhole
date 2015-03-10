@@ -105,17 +105,16 @@ public class HttpGetTest {
      *
      * @throws Exception
      */
-    @RunAsClient
-    @Ignore
-    @Test
-    public void testJenkinsExtension() throws Exception {
-        URL url = new URL(baseUrl.toString() + "jenkins");
-        HttpURLConnection cnx = (HttpURLConnection) url.openConnection();
-        logger.log(
-                Level.INFO, "cnx response code: {0}\n", cnx.getResponseCode());
-        assertEquals(200, cnx.getResponseCode());
-
-    }
+//    @RunAsClient
+//    @Test
+//    public void testJenkinsExtension() throws Exception {
+//        URL url = new URL(baseUrl.toString() + "jenkins");
+//        HttpURLConnection cnx = (HttpURLConnection) url.openConnection();
+//        logger.log(
+//                Level.INFO, "cnx response code: {0}\n", cnx.getResponseCode());
+//        assertEquals(200, cnx.getResponseCode());
+//
+//    }
 
     /**
      * verifies that the regex used to extract links from html tags functions
