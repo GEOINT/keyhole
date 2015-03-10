@@ -18,8 +18,6 @@ package net.sf.j2ep;
 import java.io.File;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.logging.Level;
 
 import javax.servlet.*;
@@ -71,8 +69,6 @@ public class ProxyFilter implements Filter {
      */
     private HttpClient httpClient;
 
-    private FilterConfig filterConfig = null;
-
     /**
      * Implementation of a reverse-proxy. All request go through here. This is
      * the main class where the handling starts.
@@ -88,7 +84,6 @@ public class ProxyFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain filterChain) throws IOException, ServletException {
-        log("keyhole: ProxyFilter.doFilter() called  ****************");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
@@ -98,22 +93,6 @@ public class ProxyFilter implements Filter {
         Server server = (Server) httpRequest.getAttribute("proxyServer");
         if (server == null) {
             server = serverChain.evaluate(httpRequest);
-        }
-        
-
-        //log request/response values
-        log("keyhole: *******request*******");
-
-        ArrayList<String> headerNames
-                = Collections.list(httpRequest.getHeaderNames());
-        for (String name : headerNames) {
-            log("keyhole: " + name + " : " + httpRequest.getHeader(name));
-        }
-
-        log("keyhole:  ********response********");
-
-        for (String name : httpResponse.getHeaderNames()) {
-            log("keyhole: " + name + " : " + httpResponse.getHeader(name));
         }
 
         if (server == null) {
@@ -129,7 +108,7 @@ public class ProxyFilter implements Filter {
                     .append(server.getRule().process(getURI(httpRequest)));
 
             String url = sb.toString();
-            log("keyhole: connecting to: " + url);
+
             logger.log(Level.INFO, "Connecting to {0}", url);
 
             ResponseHandler responseHandler = null;
@@ -203,12 +182,6 @@ public class ProxyFilter implements Filter {
     private ResponseHandler executeRequest(HttpServletRequest httpRequest,
             String url) throws MethodNotAllowedException, IOException,
             HttpException {
-        ArrayList<String> headerNames
-                = Collections.list(httpRequest.getHeaderNames());
-        for (String name : headerNames) {
-            log("keyhole: ProxyFilter#exceuteRequest: " + name + " : "
-                    + httpRequest.getHeader(name));
-        }
 
         RequestHandler requestHandler = RequestHandlerFactory
                 .createRequestMethod(httpRequest.getMethod());
@@ -247,8 +220,6 @@ public class ProxyFilter implements Filter {
      */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        
-        this.filterConfig = filterConfig;
         logger.info("init proxy filter");
         AllowedMethodHandler
                 .setAllowedMethods("OPTIONS,GET,HEAD,POST,PUT,DELETE,TRACE");
@@ -260,7 +231,6 @@ public class ProxyFilter implements Filter {
         httpClient.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
 
         String data = filterConfig.getInitParameter("dataUrl");
-        log("------------- ProxyFilter#data: " + data);
         if (data == null) {
             serverChain = null;
         } else {
@@ -284,9 +254,5 @@ public class ProxyFilter implements Filter {
     public void destroy() {
         httpClient = null;
         serverChain = null;
-    }
-
-    private void log(String msg) {
-        this.filterConfig.getServletContext().log(msg);
     }
 }

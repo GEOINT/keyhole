@@ -39,6 +39,12 @@
     <filter>
         <filter-name>Proxy</filter-name>
         <filter-class>net.sf.j2ep.ProxyFilter</filter-class>
+
+         <init-param>
+         
+             <param-name>dataUrl</param-name>
+            <param-value>testData.xml</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>Proxy</filter-name>
